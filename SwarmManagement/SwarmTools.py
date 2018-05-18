@@ -7,7 +7,7 @@ def GetInfoMsg():
     infoMsg += "The yaml file 'swarm-management.yml' is used by default if no other files are specified.\r\n"
     infoMsg += "A yaml file may be specified by adding '-file' or '-f' to the arguments.\r\n"
     infoMsg += "Example: -f swarm-management-stacks.yml -f swarm-management-networks.yml\r\n"
-    infoMsg += "Environment variables may be set with an environment file (.env by default).\r\n"
+    infoMsg += "Environment variables may be set with an environment file.\r\n"
     infoMsg += "The environment file may be set set with the 'env_files' property in the yaml file.\r\n"
     infoMsg += "Example: env_files: ['environment.env']\r\n"
     infoMsg += "The environment file may also be set set with the -e/-env argument.\r\n"
@@ -60,8 +60,6 @@ def GetEnvironmnetVariablesFiles(arguments):
         swarmManagementYamlData = GetSwarmManagementYamlData(arguments)
         if 'env_files' in swarmManagementYamlData:
             envFiles = swarmManagementYamlData['env_files']
-        else:
-            envFiles.append('.env')
     return envFiles
 
 
