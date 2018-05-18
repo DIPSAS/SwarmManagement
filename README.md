@@ -1,5 +1,5 @@
 # Docker Swarm Management
-Swarm Management is an executable python application, installed with pip.
+Swarm Management is a python application, installed with pip.
 The application makes it easy to manage a Docker Swarm by configuring a single *.yml file describing which stacks to deploy, and which networks, configs or secrets to create.
 
 ## Example
