@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+    ssl-proxy-web:
+        image: nginx:latest
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+        secrets:
+            - site.key
+            - site.crt
+        configs:
+            - source: site.conf
+              target: /etc/nginx/conf.d/site.conf
+        networks:
+            - frontend-network
+        ports:
+            - ${SSL_FRONTEND_PORT}:443
+
+networks:
+    frontend-network:
+        external: true
+    
+configs:
+    site.conf:
+        external: true
+
+secrets:
+    site.key:
+        external: true
+    site.crt:
+        external: true

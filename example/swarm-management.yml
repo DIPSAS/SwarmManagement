@@ -1,0 +1,27 @@
+
+# ['<compose_file>', '<stack_name>']
+stacks: [
+    [
+        "docker-compose-files/docker-compose.ssl.proxy.yml",
+        "ssl_proxy"
+    ]
+]
+
+# ['<network_name>', true/false] (true/false => encrypted (true) / non-encrypted (false))
+networks: [
+    ['frontend-network', false],
+    ['backend-network', true]
+]
+
+# ['<config_file>', '<config_name>']
+configs: [
+    ['DockerSSLProxy/site.conf', 'site.conf']
+]
+
+# ['<secret_file>', '<secret_name>']
+secrets: [
+    ['DockerSSLProxy/site.key', 'site.key'],
+    ['DockerSSLProxy/site.crt', 'site.crt']
+]
+
+env_file: 'environment.env'
