@@ -33,12 +33,12 @@ def DeployStacks(stacksToDeploy, stacks, environmentFile):
             DeployStack(stack, environmentFile)
 
 
-def DeployStack(stack, environmentFile):
+def DeployStack(stack, environmentFiles):
     if stack != None:
         composeFile = stack[0]
         stackName = stack[1]
         DockerSwarmTools.DeployStack(
-            composeFile, stackName, environmentFile)
+            composeFile, stackName, environmentFiles)
 
 
 def RemoveStacks(stacksToRemove, stacks):
@@ -74,11 +74,11 @@ def HandleStacks(arguments):
     stacksToRemove += SwarmTools.GetArgumentValues(arguments, '-r')
 
     stacks = GetStacks(arguments)
-    environmentFile = SwarmTools.GetEnvironmnetVariablesFile(arguments)
+    environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(arguments)
 
-    DeployStacks(stacksToDeploy, stacks, environmentFile)
+    DeployStacks(stacksToDeploy, stacks, environmentFiles)
     RemoveStacks(stacksToRemove, stacks)
-    
+
 
 if __name__ == "__main__":
     arguments = sys.argv[1:]

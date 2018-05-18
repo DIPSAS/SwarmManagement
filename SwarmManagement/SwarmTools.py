@@ -8,10 +8,10 @@ def GetInfoMsg():
     infoMsg += "A yaml file may be specified by adding '-file' or '-f' to the arguments.\r\n"
     infoMsg += "Example: -f swarm-management-stacks.yml -f swarm-management-networks.yml\r\n"
     infoMsg += "Environment variables may be set with an environment file (.env by default).\r\n"
-    infoMsg += "The environment file may be set set with the 'env_file' property in the yaml file.\r\n"
-    infoMsg += "Example: env_file: 'environment.env'\r\n"
+    infoMsg += "The environment file may be set set with the 'env_files' property in the yaml file.\r\n"
+    infoMsg += "Example: env_files: ['environment.env']\r\n"
     infoMsg += "The environment file may also be set set with the -e/-env argument.\r\n"
-    infoMsg += "Setting the -e/-env argument will override the 'env_file' yaml file property.\r\n"
+    infoMsg += "Setting the -e/-env argument will override the 'env_files' yaml file property.\r\n"
     infoMsg += "Example: -e environment.env\r\n"
     return infoMsg
 
@@ -53,21 +53,16 @@ def GetSwarmManagementYamlData(arguments):
     return yamlData
 
 
-def GetEnvironmnetVariablesFile(arguments):
-    env_file = '.env'
+def GetEnvironmnetVariablesFiles(arguments):
     envFiles = GetArgumentValues(arguments, '-env')
     envFiles += GetArgumentValues(arguments, '-e')
     if len(envFiles) == 0:
         swarmManagementYamlData = GetSwarmManagementYamlData(arguments)
-        if 'env_file' in swarmManagementYamlData:
-            env_file = swarmManagementYamlData['env_file']
-    else:
-        env_file = envFiles[0]
-    if not(isinstance(env_file, str)):
-        errorMsg = "The 'env_file' property must be a string!\r\n"
-        errorMsg += GetInfoMsg()
-        raise Exception(errorMsg)
-    return env_file
+        if 'env_files' in swarmManagementYamlData:
+            envFiles = swarmManagementYamlData['env_files']
+        else:
+            envFiles.append('.env')
+    return envFiles
 
 
 def GetProperties(arguments, propertyType, errorInfoMsg):
