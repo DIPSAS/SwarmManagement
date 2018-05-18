@@ -8,15 +8,16 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
 2. Create a `swarm-management.yml` file describing all properties of the swarm.
     - The `swarm-management.yml` file contains following properties:
         - stacks: [ [`<compose_file>`, `<stack_name>`] ]
-        - networks: [ [`<network_name>`, true/false => encrypted (true) / non-encrypted (false)] ]
+        - networks: [ [`<network_name>`, `<true/false>` => encrypted (true) / non-encrypted (false)] ]
         - configs: [ [`<config_file>`, `<config_name>`] ]
         - secrets: [ [`<secret_file>`, `<secret_name>`] ]
         - env_file: path_to/*.env
-3. Start Swarm
-    - -> SwarmManagement start
-    - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
-    - Stop the swarm with:
+3. Manage Swarm
+    - Start the Swarm with:
+        - -> SwarmManagement start
+    - Stop the Swarm with:
         - -> SwarmManagement stop
+    - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
     - Additional Info is found by asking SwarmManagement:
         - -> SwarmManagement -help
 

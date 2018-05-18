@@ -4,10 +4,11 @@
     - -> cd DockerSSLProxy
     - -> python SSLKeyGenerator.py
     - -> cd ..
-3. Start Swarm
-    - -> SwarmManagement start
-    - SwarmManagement uses the swarm-management.yml file to configure the swarm.
-    - Stop the swarm with:
+3. Manage Swarm
+    - Start the Swarm with:
+        - -> SwarmManagement start
+    - Stop the Swarm with:
         - -> SwarmManagement stop
+    - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
     - Additional Info is found by asking SwarmManagement:
         - -> SwarmManagement -help
