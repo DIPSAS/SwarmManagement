@@ -28,19 +28,19 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
     - Create or Remove a single network:
         - -> SwarmManagement network -create `<network_name>`
         - -> SwarmManagement network -remove `<network_name>`
-        - Or deploy/remove all networks with the `--all` attribute:
+        - Or create/remove all networks with the `--all` attribute:
             - -> SwarmManagement network -create --all
             - -> SwarmManagement network -remove --all
     - Create or Remove a single config:
         - -> SwarmManagement config -create `<config_name>`
         - -> SwarmManagement config -remove `<config_name>`
-        - Or deploy/remove all configs with the `--all` attribute:
+        - Or create/remove all configs with the `--all` attribute:
             - -> SwarmManagement stack -create --all
             - -> SwarmManagement stack -remove --all
     - Create or Remove a single secret:
         - -> SwarmManagement secret -create `<secret_name>`
         - -> SwarmManagement secret -remove `<secret_name>`
-        - Or deploy/remove all secrets with the `--all` attribute:
+        - Or create/remove all secrets with the `--all` attribute:
             - -> SwarmManagement secret -create --all
             - -> SwarmManagement secret -remove --all
     - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
