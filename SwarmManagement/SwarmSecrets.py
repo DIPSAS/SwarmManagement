@@ -10,8 +10,8 @@ def GetInfoMsg():
     infoMsg += "['<secret_file', '<secret_name>']\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "secrets: [ ['first_secret_file.txt', 'first_secret'], ['second_secret_file.txt', 'second_secret'] ]\r\n"
-    infoMsg += "Create or remove a secret by adding 'secret -c/-create <secret_name>' or 'secret -r/-remove <secret_name>' to the arguments\r\n"
-    infoMsg += "Create or remove all secrets by adding 'secret -c/-create --all' or 'secret -r/-remove --all' to the arguments\r\n"
+    infoMsg += "Create or remove a secret by adding '-secret -c/-create <secret_name>' or 'secret -r/-remove <secret_name>' to the arguments\r\n"
+    infoMsg += "Create or remove all secrets by adding '-secret -c/-create --all' or 'secret -r/-remove --all' to the arguments\r\n"
     return infoMsg
 
 
@@ -60,11 +60,12 @@ def RemoveSecret(secret):
 def HandleSecrets(arguments):
     if len(arguments) == 0:
         return
-    if arguments[0] != 'secret':
+    if not('-secret' in arguments):
         return
 
     if '-help' in arguments:
         print(GetInfoMsg())
+        return
 
     secretsToCreate = SwarmTools.GetArgumentValues(arguments, '-create')
     secretsToCreate += SwarmTools.GetArgumentValues(arguments, '-c')

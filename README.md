@@ -14,42 +14,44 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
         - env_file: path_to/*.env
 3. Manage Swarm
     - Start Swarm with:
-        - -> SwarmManagement start
+        - -> SwarmManagement -start
     - Stop Swarm with:
-        - -> SwarmManagement stop
+        - -> SwarmManagement -stop
     - Restart Swarm with:
-        - -> SwarmManagement restart
+        - -> SwarmManagement -restart
     - Deploy/Update or Remove a single stack:
-        - -> SwarmManagement stack -deploy `<stack_name>`
-        - -> SwarmManagement stack -remove `<stack_name>`
+        - -> SwarmManagement -stack -deploy `<stack_name>`
+        - -> SwarmManagement -stack -remove `<stack_name>`
         - Or deploy/remove all stacks with the `--all` attribute:
-            - -> SwarmManagement stack -deploy --all
-            - -> SwarmManagement stack -remove --all
+            - -> SwarmManagement -stack -deploy --all
+            - -> SwarmManagement -stack -remove --all
     - Create or Remove a single network:
-        - -> SwarmManagement network -create `<network_name>`
-        - -> SwarmManagement network -remove `<network_name>`
+        - -> SwarmManagement -network -create `<network_name>`
+        - -> SwarmManagement -network -remove `<network_name>`
         - Or create/remove all networks with the `--all` attribute:
-            - -> SwarmManagement network -create --all
-            - -> SwarmManagement network -remove --all
+            - -> SwarmManagement -network -create --all
+            - -> SwarmManagement -network -remove --all
     - Create or Remove a single config:
-        - -> SwarmManagement config -create `<config_name>`
-        - -> SwarmManagement config -remove `<config_name>`
+        - -> SwarmManagement -config -create `<config_name>`
+        - -> SwarmManagement -config -remove `<config_name>`
         - Or create/remove all configs with the `--all` attribute:
-            - -> SwarmManagement stack -create --all
-            - -> SwarmManagement stack -remove --all
+            - -> SwarmManagement -stack -create --all
+            - -> SwarmManagement -stack -remove --all
     - Create or Remove a single secret:
-        - -> SwarmManagement secret -create `<secret_name>`
-        - -> SwarmManagement secret -remove `<secret_name>`
+        - -> SwarmManagement -secret -create `<secret_name>`
+        - -> SwarmManagement -secret -remove `<secret_name>`
         - Or create/remove all secrets with the `--all` attribute:
-            - -> SwarmManagement secret -create --all
-            - -> SwarmManagement secret -remove --all
+            - -> SwarmManagement -secret -create --all
+            - -> SwarmManagement -secret -remove --all
     - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
+        - Specify a single or multiple *.yml files to use for configuring the swarm using the `-f` attribute:
+            - -> SwarmManagement -start -f swarm-stacks.yml -f swarm-networks.yml
     - Additional info is found by asking SwarmManagement:
         - -> SwarmManagement -help
-        - -> SwarmManagement stack -help
-        - -> SwarmManagement network -help
-        - -> SwarmManagement config -help
-        - -> SwarmManagement secret -help
+        - -> SwarmManagement -stack -help
+        - -> SwarmManagement -network -help
+        - -> SwarmManagement -config -help
+        - -> SwarmManagement -secret -help
 
 Please have a look at an example of use here:
 - https://github.com/DIPSAS/SwarmManagement/tree/master/example

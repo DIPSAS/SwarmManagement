@@ -10,8 +10,8 @@ def GetInfoMsg():
     infoMsg += "['<compose_file>', '<stack_name>']\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "stacks: [ ['compose_file_first_stack.yml', 'first_stack'], ['compose_file_second_stack.yml', 'second_stack'] ]\r\n"
-    infoMsg += "Deploy or remove a stack by adding 'stack -d/-deploy <stack_name>' or 'stack -r/-remove <stack_name>' to the arguments\r\n"
-    infoMsg += "Deploy or remove all stacks by adding 'stack -d/-deploy --all' or 'stack -r/-remove --all' to the arguments\r\n"
+    infoMsg += "Deploy or remove a stack by adding '-stack -d/-deploy <stack_name>' or 'stack -r/-remove <stack_name>' to the arguments\r\n"
+    infoMsg += "Deploy or remove all stacks by adding '-stack -d/-deploy --all' or 'stack -r/-remove --all' to the arguments\r\n"
     return infoMsg
 
 
@@ -60,11 +60,12 @@ def RemoveStack(stack):
 def HandleStacks(arguments):
     if len(arguments) == 0:
         return
-    if arguments[0] != 'stack':
+    if not('-stack' in arguments):
         return
 
     if '-help' in arguments:
         print(GetInfoMsg())
+        return
 
     stacksToDeploy = SwarmTools.GetArgumentValues(arguments, '-deploy')
     stacksToDeploy += SwarmTools.GetArgumentValues(arguments, '-d')
@@ -77,13 +78,7 @@ def HandleStacks(arguments):
 
     DeployStacks(stacksToDeploy, stacks, environmentFile)
     RemoveStacks(stacksToRemove, stacks)
-
-    for stackToRemove in stacksToRemove:
-        stack = FindMatchingStack(stackToRemove, stacks)
-        if stack != None:
-            stackName = stack[1]
-            DockerSwarmTools.RemoveStack(stackName)
-
+    
 
 if __name__ == "__main__":
     arguments = sys.argv[1:]

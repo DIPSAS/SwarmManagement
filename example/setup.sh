@@ -13,4 +13,4 @@ cd DockerSSLProxy
 python SSLKeyGenerator.py
 cd ..
 
-SwarmManagement start
+SwarmManagement -start

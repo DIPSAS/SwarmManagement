@@ -6,9 +6,9 @@ from DockerBuildSystem import DockerSwarmTools
 
 def GetInfoMsg():
     infoMsg = "Manage Docker Swarm\r\n"
-    infoMsg += "Add 'start' to arguments to start swarm with all stacks deployed and properties created (networks, secrets, configs..).\r\n"
-    infoMsg += "Add 'stop' to arguments to stop swarm with all stacks and properties removed.\r\n"
-    infoMsg += "Add 'restart' to arguments to restart swarm.\r\n"
+    infoMsg += "Add '-start' to arguments to start swarm with all stacks deployed and properties created (networks, secrets, configs..).\r\n"
+    infoMsg += "Add '-stop' to arguments to stop swarm with all stacks and properties removed.\r\n"
+    infoMsg += "Add '-restart' to arguments to restart swarm.\r\n"
     infoMsg += "Otherwise:\r\n\r\n"
     infoMsg += "Deploy Or Remove Stacks:\r\n"
     infoMsg += SwarmStacks.GetInfoMsg() + "\r\n\r\n"
@@ -24,40 +24,44 @@ def GetInfoMsg():
     return infoMsg
 
 
-def StartSwarm():
+def StartSwarm(arguments):
     DockerSwarmTools.StartSwarm()
-    SwarmConfigs.HandleConfigs(['config', '-create', '--all'])
-    SwarmSecrets.HandleSecrets(['secret', '-create', '--all'])
-    SwarmNetworks.HandleNetworks(['network', '-create', '--all'])
-    SwarmStacks.HandleStacks(['stack', '-deploy', '--all'])
+    SwarmConfigs.HandleConfigs(['-config', '-create', '--all'] + arguments)
+    SwarmSecrets.HandleSecrets(['-secret', '-create', '--all'] + arguments)
+    SwarmNetworks.HandleNetworks(['-network', '-create', '--all'] + arguments)
+    SwarmStacks.HandleStacks(['-stack', '-deploy', '--all'] + arguments)
 
 
-def StopSwarm():
-    SwarmStacks.HandleStacks(['stack', '-remove', '--all'])
-    SwarmConfigs.HandleConfigs(['config', '-remove', '--all'])
-    SwarmSecrets.HandleSecrets(['secret', '-remove', '--all'])
-    SwarmNetworks.HandleNetworks(['network', '-remove', '--all'])
+def StopSwarm(arguments):
+    SwarmStacks.HandleStacks(['-stack', '-remove', '--all'] + arguments)
+    SwarmConfigs.HandleConfigs(['-config', '-remove', '--all'] + arguments)
+    SwarmSecrets.HandleSecrets(['-secret', '-remove', '--all'] + arguments)
+    SwarmNetworks.HandleNetworks(['-network', '-remove', '--all'] + arguments)
 
 
-def RestartSwarm():
-    StopSwarm()
+def RestartSwarm(arguments):
+    StopSwarm(arguments)
     secTimeout = 10
     SwarmTools.TimeoutCounter(secTimeout)
-    StartSwarm()
+    StartSwarm(arguments)
 
 
 def HandleManagement(arguments):
     if len(arguments) == 0:
         print(GetInfoMsg())
     
-    if arguments[0] == '-help':
+    if '-help' in arguments \
+        and not('-stack' in arguments) \
+        and not('-config' in arguments) \
+        and not('-secret' in arguments) \
+        and not('-network' in arguments):
         print(GetInfoMsg())
-    elif arguments[0] == 'start':
-        StartSwarm()
-    elif arguments[0] == 'stop':
-        StopSwarm()
-    elif arguments[0] == 'restart':
-        RestartSwarm()
+    elif '-start' in arguments:
+        StartSwarm(arguments)
+    elif '-stop' in arguments:
+        StopSwarm(arguments)
+    elif '-restart' in arguments:
+        RestartSwarm(arguments)
     else:
         SwarmConfigs.HandleConfigs(arguments)
         SwarmSecrets.HandleSecrets(arguments)
