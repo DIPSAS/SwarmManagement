@@ -13,12 +13,12 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
         - secrets: [ [`<secret_file>`, `<secret_name>`] ]
         - env_file: path_to/*.env
 3. Manage Swarm
-    - Start the Swarm with:
+    - Start Swarm with:
         - -> SwarmManagement start
-    - Stop the Swarm with:
+    - Stop Swarm with:
         - -> SwarmManagement stop
     - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
-    - Additional Info is found by asking SwarmManagement:
+    - Additional info is found by asking SwarmManagement:
         - -> SwarmManagement -help
 
 Please have a look at an example of use here:
