@@ -54,12 +54,12 @@ def GetSwarmManagementYamlData(arguments):
 
 
 def GetEnvironmnetVariablesFiles(arguments):
-    envFiles = GetArgumentValues(arguments, '-env')
+    swarmManagementYamlData = GetSwarmManagementYamlData(arguments)
+    envFiles = []
+    if 'env_files' in swarmManagementYamlData:
+        envFiles += swarmManagementYamlData['env_files']
+    envFiles += GetArgumentValues(arguments, '-env')
     envFiles += GetArgumentValues(arguments, '-e')
-    if len(envFiles) == 0:
-        swarmManagementYamlData = GetSwarmManagementYamlData(arguments)
-        if 'env_files' in swarmManagementYamlData:
-            envFiles = swarmManagementYamlData['env_files']
     return envFiles
 
 
