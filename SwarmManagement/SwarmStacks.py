@@ -5,11 +5,11 @@ import sys
 
 def GetInfoMsg():
     infoMsg = "Stacks is configured by adding a 'stacks' property to the .yaml file.\r\n"
-    infoMsg += "The 'stacks' property consists of a list of stacks.\r\n"
-    infoMsg += "Each item in the stack list is a list with a path to the compose file and the stack name, as such: \r\n"
-    infoMsg += "['<compose_file>', '<stack_name>']\r\n"
+    infoMsg += "The 'stacks' property is a dictionary of stacks.\r\n"
+    infoMsg += "Each key in the stack dictionary is the stack name with a value containing the path to the compose file, as such: \r\n"
+    infoMsg += "<stack_name>: <compose_file>\r\n"
     infoMsg += "Example: \r\n"
-    infoMsg += "stacks: [ ['compose_file_first_stack.yml', 'first_stack'], ['compose_file_second_stack.yml', 'second_stack'] ]\r\n"
+    infoMsg += "stacks: <stack_name>: <compose_file>\r\n"
     infoMsg += "Deploy or remove a stack by adding '-stack -d/-deploy <stack_name>' or 'stack -r/-remove <stack_name>' to the arguments\r\n"
     infoMsg += "Deploy or remove all stacks by adding '-stack -d/-deploy --all' or 'stack -r/-remove --all' to the arguments\r\n"
     return infoMsg
@@ -19,26 +19,19 @@ def GetStacks(arguments):
     return SwarmTools.GetProperties(arguments, 'stacks', GetInfoMsg())
 
 
-def FindMatchingStack(stackName, stacks):
-    return SwarmTools.FindMatchingProperty(stackName, stacks, GetInfoMsg())
-
-
 def DeployStacks(stacksToDeploy, stacks, environmentFile):
     for stackToDeploy in stacksToDeploy:
         if stackToDeploy == '--all':
             for stack in stacks:
-                DeployStack(stack, environmentFile)
+                DeployStack(stack, stacks[stack], environmentFile)
         else:
-            stack = FindMatchingStack(stackToDeploy, stacks)
-            DeployStack(stack, environmentFile)
+            if stackToDeploy in stacks:
+                DeployStack(stackToDeploy, stacks[stackToDeploy], environmentFile)
 
 
-def DeployStack(stack, environmentFiles):
-    if stack != None:
-        composeFile = stack[0]
-        stackName = stack[1]
-        DockerSwarmTools.DeployStack(
-            composeFile, stackName, environmentFiles)
+def DeployStack(stackName, composeFile, environmentFiles):
+    DockerSwarmTools.DeployStack(
+        composeFile, stackName, environmentFiles)
 
 
 def RemoveStacks(stacksToRemove, stacks):
@@ -47,14 +40,12 @@ def RemoveStacks(stacksToRemove, stacks):
             for stack in stacks:
                 RemoveStack(stack)
         else:
-            stack = FindMatchingStack(stackToRemove, stacks)
-            RemoveStack(stack)
+            if stackToRemove in stacks:
+                RemoveStack(stackToRemove)
 
 
 def RemoveStack(stack):
-    if stack != None:
-        stackName = stack[1]
-        DockerSwarmTools.RemoveStack(stackName)
+    DockerSwarmTools.RemoveStack(stack)
 
 
 def HandleStacks(arguments):

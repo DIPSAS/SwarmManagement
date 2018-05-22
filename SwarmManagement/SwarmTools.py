@@ -9,7 +9,7 @@ def GetInfoMsg():
     infoMsg += "Example: -f swarm-management-stacks.yml -f swarm-management-networks.yml\r\n"
     infoMsg += "Environment variables may be set with an environment file.\r\n"
     infoMsg += "The environment file may be set set with the 'env_files' property in the yaml file.\r\n"
-    infoMsg += "Example: env_files: ['environment.env']\r\n"
+    infoMsg += "Example: env_files: - 'environment.env'\r\n"
     infoMsg += "The environment file may also be set set with the -e/-env argument.\r\n"
     infoMsg += "Setting the -e/-env argument will override the 'env_files' yaml file property.\r\n"
     infoMsg += "Example: -e environment.env\r\n"
@@ -65,28 +65,10 @@ def GetEnvironmnetVariablesFiles(arguments):
 
 def GetProperties(arguments, propertyType, errorInfoMsg):
     swarmManagementYamlData = GetSwarmManagementYamlData(arguments)
-    secrets = []
+    properties = {}
     if propertyType in swarmManagementYamlData:
-        secrets = swarmManagementYamlData[propertyType]
-    if not(isinstance(secrets, list)):
-        raise Exception(errorInfoMsg)
-    return secrets
-
-
-def FindMatchingProperty(propertyName, properties, errorInfoMsg):
-    for propertyValue in properties:
-        if not(isinstance(propertyValue, list)):
-            errorMsg = "The yaml property must be a list!\r\n"
-            errorMsg += errorInfoMsg
-            raise Exception(errorMsg)
-        if len(propertyValue) != 2:
-            errorMsg = "The yaml property must be a list with size of 2!\r\n"
-            errorMsg += errorInfoMsg
-            raise Exception(errorMsg)
-        matchpropertyName = propertyValue[1]
-        if matchpropertyName == propertyName:
-            return propertyValue
-    return None
+        properties = swarmManagementYamlData[propertyType]
+    return properties
 
 
 def TimeoutCounter(secTimeout):

@@ -1,30 +1,17 @@
 
-# [ [`<compose_file>`, `<stack_name>`], .. ]
-stacks: [
-    [
-        "docker-compose-files/docker-compose.ssl.proxy.yml",
-        "ssl_proxy"
-    ]
-]
+stacks: 
+    ssl_proxy: docker-compose-files/docker-compose.ssl.proxy.yml
 
-# [ [`<network_name>`, `<true/false>` => encrypted (true) / non-encrypted (false)], .. ]
-networks: [
-    ['frontend-network', false],
-    ['backend-network', true]
-]
+networks: 
+    frontend-network: false
+    backend-network: true
 
-# [ [`<config_file>`, `<config_name>`], .. ]
-configs: [
-    ['DockerSSLProxy/site.conf', 'site.conf']
-]
+configs: 
+    site.conf: DockerSSLProxy/site.conf
 
-# [ [`<secret_file>`, `<secret_name>`], .. ]
-secrets: [
-    ['DockerSSLProxy/site.key', 'site.key'],
-    ['DockerSSLProxy/site.crt', 'site.crt']
-]
+secrets: 
+    site.key: DockerSSLProxy/site.key
+    site.crt: DockerSSLProxy/site.crt
 
-# [ `<environment_file>`, .. ]
-env_files: [
-    'environment.env'
-]
+env_files: 
+    - environment.env

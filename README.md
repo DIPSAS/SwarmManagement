@@ -7,11 +7,18 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
     - pip install SwarmManagement
 2. Create a `swarm-management.yml` file describing all properties of the swarm.
     - The `swarm-management.yml` file contains following properties:
-        - stacks: [ [`<compose_file>`, `<stack_name>`], .. ]
-        - networks: [ [`<network_name>`, `<true/false>` => encrypted (true) / non-encrypted (false)], .. ]
-        - configs: [ [`<config_file>`, `<config_name>`], .. ]
-        - secrets: [ [`<secret_file>`, `<secret_name>`], .. ]
-        - env_files: [ `<environment_file>`, .. ]
+    ```yaml
+    stacks:
+        <stack_name>: <compose_file>
+    networks:
+        <network_name>: <true/false> => encrypted (true) / non-encrypted (false)
+    configs:
+        <config_name>: <config_file>
+    secrets:
+        <secret_name>: <secret_file>
+    env_files:
+        - <environment_file>
+    ```
 3. Manage Swarm
     - Start Swarm with:
         - -> SwarmManagement -start

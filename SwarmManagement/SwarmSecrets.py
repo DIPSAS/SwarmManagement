@@ -5,11 +5,11 @@ import sys
 
 def GetInfoMsg():
     infoMsg = "Secrets is configured by adding a 'secrets' property to the .yaml file.\r\n"
-    infoMsg += "The 'secrets' property consists of a list of secrets.\r\n"
-    infoMsg += "Each item in the secrets list is a list with a path to the secret file and the secret name, as such: \r\n"
-    infoMsg += "['<secret_file', '<secret_name>']\r\n"
+    infoMsg += "The 'secrets' property is a dictionary of secrets.\r\n"
+    infoMsg += "Each key in the secret dictionary is the secret name with a value containing the path to the secret file, as such: \r\n"
+    infoMsg += "<secret_name>: <secret_file>\r\n"
     infoMsg += "Example: \r\n"
-    infoMsg += "secrets: [ ['first_secret_file.txt', 'first_secret'], ['second_secret_file.txt', 'second_secret'] ]\r\n"
+    infoMsg += "secrets: <secret_name>: <secret_file>\r\n"
     infoMsg += "Create or remove a secret by adding '-secret -c/-create <secret_name>' or 'secret -r/-remove <secret_name>' to the arguments\r\n"
     infoMsg += "Create or remove all secrets by adding '-secret -c/-create --all' or 'secret -r/-remove --all' to the arguments\r\n"
     return infoMsg
@@ -19,26 +19,19 @@ def GetSecrets(arguments):
     return SwarmTools.GetProperties(arguments, 'secrets', GetInfoMsg())
 
 
-def FindMatchingSecret(secretName, secrets):
-    return SwarmTools.FindMatchingProperty(secretName, secrets, GetInfoMsg())
-
-
 def CreateSecrets(secretsToCreate, secrets):
     for secretToCreate in secretsToCreate:
         if secretToCreate == '--all':
             for secret in secrets:
-                CreateSecret(secret)
+                CreateSecret(secret, secrets[secret])
         else:
-            secret = FindMatchingSecret(secretToCreate, secrets)
-            CreateSecret(secret)
+            if secretToCreate in secrets:
+                CreateSecret(secretToCreate, secrets[secretToCreate])
 
 
-def CreateSecret(secret):
-    if secret != None:
-        secretFile = secret[0]
-        secretName = secret[1]
-        DockerSwarmTools.CreateSwarmSecret(
-            secretFile, secretName)
+def CreateSecret(secretName, secretFile):
+    DockerSwarmTools.CreateSwarmSecret(
+        secretFile, secretName)
 
 
 def RemoveSecrets(secretsToRemove, secrets):
@@ -47,14 +40,12 @@ def RemoveSecrets(secretsToRemove, secrets):
             for secret in secrets:
                 RemoveSecret(secret)
         else:
-            secret = FindMatchingSecret(secretToRemove, secrets)
-            RemoveSecret(secret)
+            if secretToRemove in secrets:
+                RemoveSecret(secretToRemove)
 
 
-def RemoveSecret(secret):
-    if secret != None:
-        secretName = secret[1]
-        DockerSwarmTools.RemoveSwarmSecret(secretName)
+def RemoveSecret(secretName):
+    DockerSwarmTools.RemoveSwarmSecret(secretName)
 
 
 def HandleSecrets(arguments):
