@@ -50,6 +50,12 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
         - Or create/remove all secrets with the `--all` attribute:
             - -> SwarmManagement -secret -create --all
             - -> SwarmManagement -secret -remove --all
+    - Create or Remove a single volume:
+        - -> SwarmManagement -volume -create `<volume_name>`
+        - -> SwarmManagement -volume -remove `<volume_name>`
+        - Or create/remove all volumes with the `--all` attribute:
+            - -> SwarmManagement -volume -create --all
+            - -> SwarmManagement -volume -remove --all
     - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
         - Specify a single or multiple *.yml files to use for configuring the swarm using the `-f` attribute:
             - -> SwarmManagement -start -f swarm-stacks.yml -f swarm-networks.yml
@@ -59,6 +65,7 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
         - -> SwarmManagement -network -help
         - -> SwarmManagement -config -help
         - -> SwarmManagement -secret -help
+        - -> SwarmManagement -volume -help
 
 Please have a look at an example of use here:
 - https://github.com/DIPSAS/SwarmManagement/tree/master/example
