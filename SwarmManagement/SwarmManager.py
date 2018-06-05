@@ -1,6 +1,6 @@
 import sys
 import time
-from SwarmManagement import SwarmStacks, SwarmConfigs, SwarmSecrets, SwarmNetworks, SwarmTools
+from SwarmManagement import SwarmStacks, SwarmConfigs, SwarmSecrets, SwarmNetworks, SwarmVolumes, SwarmTools
 from DockerBuildSystem import DockerSwarmTools
 
 
@@ -26,6 +26,7 @@ def GetInfoMsg():
 
 def StartSwarm(arguments):
     DockerSwarmTools.StartSwarm()
+    SwarmVolumes.HandleVolumes(['-volume', '-create', '--all'] + arguments)
     SwarmConfigs.HandleConfigs(['-config', '-create', '--all'] + arguments)
     SwarmSecrets.HandleSecrets(['-secret', '-create', '--all'] + arguments)
     SwarmNetworks.HandleNetworks(['-network', '-create', '--all'] + arguments)
@@ -63,6 +64,7 @@ def HandleManagement(arguments):
     elif '-restart' in arguments:
         RestartSwarm(arguments)
     else:
+        SwarmVolumes.HandleVolumes(arguments)
         SwarmConfigs.HandleConfigs(arguments)
         SwarmSecrets.HandleSecrets(arguments)
         SwarmNetworks.HandleNetworks(arguments)

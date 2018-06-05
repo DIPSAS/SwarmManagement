@@ -9,7 +9,7 @@ def GetInfoMsg():
     infoMsg += "Each key in the config dictionary is the config name with a value containing the path to the config file, as such: \r\n"
     infoMsg += "<config_name>: <config_file>\r\n"
     infoMsg += "Example: \r\n"
-    infoMsg += "secrets: <config_name>: <config_file>\r\n"
+    infoMsg += "configs: <config_name>: <config_file>\r\n"
     infoMsg += "Create or remove a config by adding '-config -c/-create <config_name>' or '-config -r/-remove <config_name>' to the arguments\r\n"
     infoMsg += "Create or remove all configs by adding '-config -c/-create --all' or '-config -r/-remove --all' to the arguments\r\n"
     return infoMsg

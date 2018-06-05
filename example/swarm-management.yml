@@ -13,5 +13,9 @@ secrets:
     site.key: DockerSSLProxy/site.key
     site.crt: DockerSSLProxy/site.crt
 
+volumes:
+    first_volume:
+    second_volume:
+
 env_files: 
     - environment.env
