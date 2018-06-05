@@ -16,6 +16,8 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
         <config_name>: <config_file>
     secrets:
         <secret_name>: <secret_file>
+    volumes:
+        <volume_name>:
     env_files:
         - <environment_file>
     ```
