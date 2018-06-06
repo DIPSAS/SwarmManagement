@@ -19,14 +19,14 @@ def GetStacks(arguments):
     return SwarmTools.GetProperties(arguments, 'stacks', GetInfoMsg())
 
 
-def DeployStacks(stacksToDeploy, stacks, environmentFile):
+def DeployStacks(stacksToDeploy, stacks, environmentFiles):
     for stackToDeploy in stacksToDeploy:
         if stackToDeploy == '--all':
             for stack in stacks:
-                DeployStack(stack, stacks[stack], environmentFile)
+                DeployStack(stack, stacks[stack], environmentFiles)
         else:
             if stackToDeploy in stacks:
-                DeployStack(stackToDeploy, stacks[stackToDeploy], environmentFile)
+                DeployStack(stackToDeploy, stacks[stackToDeploy], environmentFiles)
 
 
 def DeployStack(stackName, composeFile, environmentFiles):
