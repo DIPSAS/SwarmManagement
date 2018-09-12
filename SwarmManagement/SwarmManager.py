@@ -18,6 +18,8 @@ def GetInfoMsg():
     infoMsg += SwarmConfigs.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Create Or Remove Secrets:\r\n"
     infoMsg += SwarmSecrets.GetInfoMsg() + "\r\n\r\n"
+    infoMsg += "Create Or Remove Volumes:\r\n"
+    infoMsg += SwarmVolumes.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Additional Info:\r\n"
     infoMsg += SwarmTools.GetInfoMsg() + "\r\n\r\n"
     infoMsg += "Add '-help' to arguments to print this info again.\r\n\r\n"
