@@ -39,7 +39,7 @@ def StopSwarm(arguments):
     SwarmStacks.HandleStacks(['-stack', '-remove', '--all'] + arguments)
     SwarmConfigs.HandleConfigs(['-config', '-remove', '--all'] + arguments)
     SwarmSecrets.HandleSecrets(['-secret', '-remove', '--all'] + arguments)
-    SwarmNetworks.HandleNetworks(['-network', '-remove', '--all'] + arguments)
+    # SwarmNetworks.HandleNetworks(['-network', '-remove', '--all'] + arguments)
 
 
 def RestartSwarm(arguments):
