@@ -1,10 +1,7 @@
 # Example Of Use With Swarm Management
-1. Install dependencies in requirements.txt with pip
-2. Generate ssl keys
-    - -> cd DockerSSLProxy
-    - -> python SSLKeyGenerator.py
-    - -> cd ..
-3. Manage Swarm
+1. Install SwarmManagement with pip:
+    - pip install SwarmManagement
+2. Manage Swarm
     - Start Swarm with:
         - -> SwarmManagement -start
     - Stop Swarm with:
