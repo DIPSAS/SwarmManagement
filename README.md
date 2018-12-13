@@ -69,6 +69,8 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
         - -> SwarmManagement -secret -help
         - -> SwarmManagement -volume -help
 
+The SwarmManagement console command is also available as a short command with `swm`.
+
 Please have a look at an example of use here:
 - https://github.com/DIPSAS/SwarmManagement/tree/master/example
 
