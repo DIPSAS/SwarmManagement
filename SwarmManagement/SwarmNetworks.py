@@ -10,8 +10,8 @@ def GetInfoMsg():
     infoMsg += "<network_name>: true/false\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "secrets: <network_name>: true/false\r\n"
-    infoMsg += "Create or remove a network by adding '-network -c/-create <network_name>' or 'network -r/-remove <network_name>' to the arguments\r\n"
-    infoMsg += "Create or remove all networks by adding '-network -c/-create --all' or 'network -r/-remove --all' to the arguments\r\n"
+    infoMsg += "Create or remove a network by adding '-network -c/-create <network_name>' or 'network -rm/-remove <network_name>' to the arguments\r\n"
+    infoMsg += "Create or remove all networks by adding '-network -c/-create --all' or 'network -rm/-remove --all' to the arguments\r\n"
     return infoMsg
 
 
@@ -62,7 +62,7 @@ def HandleNetworks(arguments):
     networksToCreate += SwarmTools.GetArgumentValues(arguments, '-c')
 
     networksToRemove = SwarmTools.GetArgumentValues(arguments, '-remove')
-    networksToRemove += SwarmTools.GetArgumentValues(arguments, '-r')
+    networksToRemove += SwarmTools.GetArgumentValues(arguments, '-rm')
 
     networks = GetNetworks(arguments)
 

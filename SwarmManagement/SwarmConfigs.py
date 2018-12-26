@@ -10,8 +10,8 @@ def GetInfoMsg():
     infoMsg += "<config_name>: <config_file>\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "configs: <config_name>: <config_file>\r\n"
-    infoMsg += "Create or remove a config by adding '-config -c/-create <config_name>' or '-config -r/-remove <config_name>' to the arguments\r\n"
-    infoMsg += "Create or remove all configs by adding '-config -c/-create --all' or '-config -r/-remove --all' to the arguments\r\n"
+    infoMsg += "Create or remove a config by adding '-config -c/-create <config_name>' or '-config -rm/-remove <config_name>' to the arguments\r\n"
+    infoMsg += "Create or remove all configs by adding '-config -c/-create --all' or '-config -rm/-remove --all' to the arguments\r\n"
     return infoMsg
 
 
@@ -62,7 +62,7 @@ def HandleConfigs(arguments):
     configsToCreate += SwarmTools.GetArgumentValues(arguments, '-c')
 
     configsToRemove = SwarmTools.GetArgumentValues(arguments, '-remove')
-    configsToRemove += SwarmTools.GetArgumentValues(arguments, '-r')
+    configsToRemove += SwarmTools.GetArgumentValues(arguments, '-rm')
 
     configs = GetConfigs(arguments)
 

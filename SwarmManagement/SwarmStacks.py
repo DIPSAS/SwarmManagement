@@ -10,8 +10,8 @@ def GetInfoMsg():
     infoMsg += "<stack_name>: <compose_file>\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "stacks: <stack_name>: <compose_file>\r\n"
-    infoMsg += "Deploy or remove a stack by adding '-stack -d/-deploy <stack_name>' or 'stack -r/-remove <stack_name>' to the arguments\r\n"
-    infoMsg += "Deploy or remove all stacks by adding '-stack -d/-deploy --all' or 'stack -r/-remove --all' to the arguments\r\n"
+    infoMsg += "Deploy or remove a stack by adding '-stack -d/-deploy <stack_name>' or 'stack -rm/-remove <stack_name>' to the arguments\r\n"
+    infoMsg += "Deploy or remove all stacks by adding '-stack -d/-deploy --all' or 'stack -rm/-remove --all' to the arguments\r\n"
     return infoMsg
 
 
@@ -62,7 +62,7 @@ def HandleStacks(arguments):
     stacksToDeploy += SwarmTools.GetArgumentValues(arguments, '-d')
 
     stacksToRemove = SwarmTools.GetArgumentValues(arguments, '-remove')
-    stacksToRemove += SwarmTools.GetArgumentValues(arguments, '-r')
+    stacksToRemove += SwarmTools.GetArgumentValues(arguments, '-rm')
 
     stacks = GetStacks(arguments)
     environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(arguments)

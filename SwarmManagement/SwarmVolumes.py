@@ -10,8 +10,8 @@ def GetInfoMsg():
     infoMsg += "<volume_name>:\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "volumes: <volume_name>:\r\n"
-    infoMsg += "Create or remove a volume by adding '-volume -c/-create <volume_name>' or '-volume -r/-remove <volume_name>' to the arguments\r\n"
-    infoMsg += "Create or remove all volumes by adding '-volume -c/-create --all' or '-volume -r/-remove --all' to the arguments\r\n"
+    infoMsg += "Create or remove a volume by adding '-volume -c/-create <volume_name>' or '-volume -rm/-remove <volume_name>' to the arguments\r\n"
+    infoMsg += "Create or remove all volumes by adding '-volume -c/-create --all' or '-volume -rm/-remove --all' to the arguments\r\n"
     return infoMsg
 
 
@@ -61,7 +61,7 @@ def HandleVolumes(arguments):
     volumesToCreate += SwarmTools.GetArgumentValues(arguments, '-c')
 
     volumesToRemove = SwarmTools.GetArgumentValues(arguments, '-remove')
-    volumesToRemove += SwarmTools.GetArgumentValues(arguments, '-r')
+    volumesToRemove += SwarmTools.GetArgumentValues(arguments, '-rm')
 
     volumes = GetVolumes(arguments)
 
