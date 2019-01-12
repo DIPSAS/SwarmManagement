@@ -11,7 +11,7 @@ def GetInfoMsg():
     infoMsg += "Example: \r\n"
     infoMsg += "stacks: <stack_name>: <compose_file>\r\n"
     infoMsg += "Deploy or remove a stack by adding '-stack -d/-deploy <stack_name>' or 'stack -rm/-remove <stack_name>' to the arguments\r\n"
-    infoMsg += "Deploy or remove all stacks by adding '-stack -d/-deploy --all' or 'stack -rm/-remove --all' to the arguments\r\n"
+    infoMsg += "Deploy or remove all stacks by adding '-stack -d/-deploy all' or 'stack -rm/-remove all' to the arguments\r\n"
     return infoMsg
 
 
@@ -21,7 +21,7 @@ def GetStacks(arguments):
 
 def DeployStacks(stacksToDeploy, stacks, environmentFiles):
     for stackToDeploy in stacksToDeploy:
-        if stackToDeploy == '--all':
+        if stackToDeploy == 'all':
             for stack in stacks:
                 DeployStack(stack, stacks[stack], environmentFiles)
         else:
@@ -36,7 +36,7 @@ def DeployStack(stackName, composeFile, environmentFiles):
 
 def RemoveStacks(stacksToRemove, stacks):
     for stackToRemove in stacksToRemove:
-        if stackToRemove == '--all':
+        if stackToRemove == 'all':
             for stack in stacks:
                 RemoveStack(stack)
         else:

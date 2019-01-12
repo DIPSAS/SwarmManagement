@@ -11,7 +11,7 @@ def GetInfoMsg():
     infoMsg += "Example: \r\n"
     infoMsg += "secrets: <secret_name>: <secret_file>\r\n"
     infoMsg += "Create or remove a secret by adding '-secret -c/-create <secret_name>' or 'secret -rm/-remove <secret_name>' to the arguments\r\n"
-    infoMsg += "Create or remove all secrets by adding '-secret -c/-create --all' or 'secret -rm/-remove --all' to the arguments\r\n"
+    infoMsg += "Create or remove all secrets by adding '-secret -c/-create all' or 'secret -rm/-remove all' to the arguments\r\n"
     return infoMsg
 
 
@@ -21,7 +21,7 @@ def GetSecrets(arguments):
 
 def CreateSecrets(secretsToCreate, secrets):
     for secretToCreate in secretsToCreate:
-        if secretToCreate == '--all':
+        if secretToCreate == 'all':
             for secret in secrets:
                 CreateSecret(secret, secrets[secret])
         else:
@@ -36,7 +36,7 @@ def CreateSecret(secretName, secretFile):
 
 def RemoveSecrets(secretsToRemove, secrets):
     for secretToRemove in secretsToRemove:
-        if secretToRemove == '--all':
+        if secretToRemove == 'all':
             for secret in secrets:
                 RemoveSecret(secret)
         else:

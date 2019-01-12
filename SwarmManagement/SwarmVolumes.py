@@ -11,7 +11,7 @@ def GetInfoMsg():
     infoMsg += "Example: \r\n"
     infoMsg += "volumes: <volume_name>:\r\n"
     infoMsg += "Create or remove a volume by adding '-volume -c/-create <volume_name>' or '-volume -rm/-remove <volume_name>' to the arguments\r\n"
-    infoMsg += "Create or remove all volumes by adding '-volume -c/-create --all' or '-volume -rm/-remove --all' to the arguments\r\n"
+    infoMsg += "Create or remove all volumes by adding '-volume -c/-create all' or '-volume -rm/-remove all' to the arguments\r\n"
     return infoMsg
 
 
@@ -21,7 +21,7 @@ def GetVolumes(arguments):
 
 def CreateVolumes(volumesToCreate, volumes):
     for volumeToCreate in volumesToCreate:
-        if volumeToCreate == '--all':
+        if volumeToCreate == 'all':
             for volume in volumes:
                 CreateVolume(volume)
         else:
@@ -35,7 +35,7 @@ def CreateVolume(volumeName):
 
 def RemoveVolumes(volumesToRemove, volumes):
     for volumeToRemove in volumesToRemove:
-        if volumeToRemove == '--all':
+        if volumeToRemove == 'all':
             for volume in volumes:
                 RemoveVolume(volume)
         else:

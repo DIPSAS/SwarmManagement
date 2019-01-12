@@ -11,7 +11,7 @@ def GetInfoMsg():
     infoMsg += "Example: \r\n"
     infoMsg += "configs: <config_name>: <config_file>\r\n"
     infoMsg += "Create or remove a config by adding '-config -c/-create <config_name>' or '-config -rm/-remove <config_name>' to the arguments\r\n"
-    infoMsg += "Create or remove all configs by adding '-config -c/-create --all' or '-config -rm/-remove --all' to the arguments\r\n"
+    infoMsg += "Create or remove all configs by adding '-config -c/-create all' or '-config -rm/-remove all' to the arguments\r\n"
     return infoMsg
 
 
@@ -21,7 +21,7 @@ def GetConfigs(arguments):
 
 def CreateConfigs(configsToCreate, configs):
     for configToCreate in configsToCreate:
-        if configToCreate == '--all':
+        if configToCreate == 'all':
             for config in configs:
                 CreateConfig(config, configs[config])
         else:
@@ -36,7 +36,7 @@ def CreateConfig(configName, configFile):
 
 def RemoveConfigs(configsToRemove, configs):
     for configToRemove in configsToRemove:
-        if configToRemove == '--all':
+        if configToRemove == 'all':
             for config in configs:
                 RemoveConfig(config)
         else:
