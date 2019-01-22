@@ -16,7 +16,8 @@ def GetInfoMsg():
 
 
 def GetVolumes(arguments):
-    return SwarmTools.GetProperties(arguments, 'volumes', GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
+    return SwarmTools.GetProperties(arguments, 'volumes', GetInfoMsg(), yamlData)
 
 
 def CreateVolumes(volumesToCreate, volumes):

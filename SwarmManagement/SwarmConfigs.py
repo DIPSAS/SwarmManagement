@@ -16,7 +16,8 @@ def GetInfoMsg():
 
 
 def GetConfigs(arguments):
-    return SwarmTools.GetProperties(arguments, 'configs', GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
+    return SwarmTools.GetProperties(arguments, 'configs', GetInfoMsg(), yamlData)
 
 
 def CreateConfigs(configsToCreate, configs):

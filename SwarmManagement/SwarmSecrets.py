@@ -16,7 +16,8 @@ def GetInfoMsg():
 
 
 def GetSecrets(arguments):
-    return SwarmTools.GetProperties(arguments, 'secrets', GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
+    return SwarmTools.GetProperties(arguments, 'secrets', GetInfoMsg(), yamlData)
 
 
 def CreateSecrets(secretsToCreate, secrets):

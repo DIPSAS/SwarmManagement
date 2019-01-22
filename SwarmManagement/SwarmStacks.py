@@ -16,7 +16,8 @@ def GetInfoMsg():
 
 
 def GetStacks(arguments):
-    return SwarmTools.GetProperties(arguments, 'stacks', GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
+    return SwarmTools.GetProperties(arguments, 'stacks', GetInfoMsg(), yamlData)
 
 
 def DeployStacks(stacksToDeploy, stacks, environmentFiles):
@@ -65,7 +66,8 @@ def HandleStacks(arguments):
     stacksToRemove += SwarmTools.GetArgumentValues(arguments, '-rm')
 
     stacks = GetStacks(arguments)
-    environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(arguments)
+    yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
+    environmentFiles = SwarmTools.GetEnvironmnetVariablesFiles(arguments, yamlData)
 
     DeployStacks(stacksToDeploy, stacks, environmentFiles)
     RemoveStacks(stacksToRemove, stacks)

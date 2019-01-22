@@ -16,7 +16,8 @@ def GetInfoMsg():
 
 
 def GetNetworks(arguments):
-    return SwarmTools.GetProperties(arguments, 'networks', GetInfoMsg())
+    yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
+    return SwarmTools.GetProperties(arguments, 'networks', GetInfoMsg(), yamlData)
 
 
 def CreateNetworks(networksToCreate, networks):

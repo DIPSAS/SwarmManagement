@@ -2,6 +2,9 @@ import yaml
 import time
 
 
+DEFAULT_SWARM_MANAGEMENT_YAML_FILE = 'swarm-management.yml'
+
+
 def GetInfoMsg():
     infoMsg = "One or more yaml files are used to configure the swarm.\r\n"
     infoMsg += "The yaml file 'swarm-management.yml' is used by default if no other files are specified.\r\n"
@@ -47,30 +50,28 @@ def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix = "-"):
     return argumentValues
 
 
-def GetSwarmManagementYamlData(arguments):
+def LoadYamlDataFromFiles(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE]):
     yamlFiles = GetArgumentValues(arguments, '-file')
     yamlFiles += GetArgumentValues(arguments, '-f')
     if len(yamlFiles) == 0:
-        yamlFiles.append('swarm-management.yml')
+        yamlFiles = defaultYamlFiles
     yamlData = GetYamlData(yamlFiles)
     return yamlData
 
 
-def GetEnvironmnetVariablesFiles(arguments):
-    swarmManagementYamlData = GetSwarmManagementYamlData(arguments)
+def GetEnvironmnetVariablesFiles(arguments, yamlData):
     envFiles = []
-    if 'env_files' in swarmManagementYamlData:
-        envFiles += swarmManagementYamlData['env_files']
+    if 'env_files' in yamlData:
+        envFiles += yamlData['env_files']
     envFiles += GetArgumentValues(arguments, '-env')
     envFiles += GetArgumentValues(arguments, '-e')
     return envFiles
 
 
-def GetProperties(arguments, propertyType, errorInfoMsg):
-    swarmManagementYamlData = GetSwarmManagementYamlData(arguments)
+def GetProperties(arguments, propertyType, errorInfoMsg, yamlData):
     properties = {}
-    if propertyType in swarmManagementYamlData:
-        properties = swarmManagementYamlData[propertyType]
+    if propertyType in yamlData:
+        properties = yamlData[propertyType]
     return properties
 
 
