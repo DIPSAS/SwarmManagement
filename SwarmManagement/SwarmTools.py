@@ -46,7 +46,7 @@ def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix = "-"):
         currentArgumentType = arguments[i]
         if currentArgumentType == argumentType:
             for j in range(len(arguments)):
-                argumentValue = arguments[i]
+                argumentValue = arguments[j]
                 if not(argumentValue.startswith(ignoreArgumentsWithPrefix)):
                     argumentValues.append(argumentValue)
     return argumentValues
