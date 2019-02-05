@@ -42,11 +42,13 @@ def GetYamlData(yamlFiles):
 
 def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix = "-"):
     argumentValues = []
-    for i in range(len(arguments)-1):
+    for i in range(len(arguments)):
         currentArgumentType = arguments[i]
-        argumentValue = arguments[i+1]
-        if currentArgumentType == argumentType and not(argumentValue.startswith(ignoreArgumentsWithPrefix)):
-            argumentValues.append(argumentValue)
+        if currentArgumentType == argumentType:
+            for j in range(len(arguments)):
+                argumentValue = arguments[i]
+                if not(argumentValue.startswith(ignoreArgumentsWithPrefix)):
+                    argumentValues.append(argumentValue)
     return argumentValues
 
 
