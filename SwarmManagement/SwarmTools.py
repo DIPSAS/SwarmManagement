@@ -1,5 +1,6 @@
 import yaml
 import time
+import os
 
 
 DEFAULT_SWARM_MANAGEMENT_YAML_FILE = 'swarm-management.yml'
@@ -11,6 +12,12 @@ def GetInfoMsg():
     infoMsg += "A yaml file may be specified by adding '-file' or '-f' to the arguments.\r\n"
     infoMsg += "Example: -f swarm-management-stacks.yml -f swarm-management-networks.yml\r\n"
     infoMsg += "Environment variables may be set with environment files.\r\n"
+    infoMsg += GetEnvironmentVariablesInfoMsg()
+    return infoMsg
+
+
+def GetEnvironmentVariablesInfoMsg():
+    infoMsg = "Environment variables may be set with environment files.\r\n"
     infoMsg += "Multiple environment files may be set set with the 'env_files' property in the yaml file.\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "env_files: \r\n"
@@ -28,13 +35,16 @@ def GetYamlString(yamlFile):
     return yamlString
 
 
-def GetYamlData(yamlFiles):
+def GetYamlData(yamlFiles, ignoreEmptyYamlData = False):
     yamlStrings = ""
     for yamlFile in yamlFiles:
         yamlStrings += GetYamlString(yamlFile)
     yamlData = yaml.load(yamlStrings)
     if yamlData == None:
-        errorMsg = "No .yml files where discovered!\r\n"
+        if ignoreEmptyYamlData:
+            yamlData = {}
+            return yamlData
+        errorMsg = "No yml data where discovered!\r\n"
         errorMsg += GetInfoMsg()
         raise Exception(errorMsg)
     return yamlData
@@ -52,13 +62,24 @@ def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix = "-"):
     return argumentValues
 
 
-def LoadYamlDataFromFiles(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE]):
+def LoadYamlDataFromFiles(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE], \
+    ignoreNonExistingFiles = False, ignoreEmptyYamlData = False):
     yamlFiles = GetArgumentValues(arguments, '-file')
     yamlFiles += GetArgumentValues(arguments, '-f')
     if len(yamlFiles) == 0:
         yamlFiles = defaultYamlFiles
-    yamlData = GetYamlData(yamlFiles)
+    if ignoreNonExistingFiles:
+        yamlFiles = RemoveNonExistingFiles(yamlFiles)
+    yamlData = GetYamlData(yamlFiles, ignoreEmptyYamlData)
     return yamlData
+
+
+def RemoveNonExistingFiles(files):
+    existingFiles = []
+    for filename in files:
+        if os.path.isfile(filename):
+            existingFiles.append(filename)
+    return existingFiles
 
 
 def GetEnvironmnetVariablesFiles(arguments, yamlData):
