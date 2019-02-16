@@ -78,7 +78,7 @@ Please have a look at an example of use here:
 - https://github.com/DIPSAS/SwarmManagement/tree/master/example
 
 ## Install And/Or Upgrade
-- pip install --no-cache-dir --upgrade SwarmManagement
+- pip install --no-cache --upgrade SwarmManagement
 
 ## Prerequisites
 - Docker:
