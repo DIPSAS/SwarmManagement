@@ -1,5 +1,6 @@
 import yaml
 import time
+import re
 import os
 
 
@@ -35,10 +36,23 @@ def GetYamlString(yamlFile):
     return yamlString
 
 
+def ReplaceEnvironmentVariablesMatches(yamlString):
+    pattern = r'\$\{([^}^{]+)\}'
+    matches = re.finditer(pattern, yamlString)
+    for match in matches:
+        envVar = match.group()[2:-1]
+        envValue = os.environ.get(envVar)
+        if envValue == None:
+            envValue = ''
+        yamlString = yamlString.replace(match.group(), envValue)
+    return yamlString
+
+
 def GetYamlData(yamlFiles, ignoreEmptyYamlData = False):
     yamlStrings = ""
     for yamlFile in yamlFiles:
         yamlStrings += GetYamlString(yamlFile)
+    yamlStrings = ReplaceEnvironmentVariablesMatches(yamlStrings)
     yamlData = yaml.load(yamlStrings)
     if yamlData == None:
         if ignoreEmptyYamlData:
