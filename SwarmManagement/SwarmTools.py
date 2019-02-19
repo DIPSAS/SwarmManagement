@@ -38,6 +38,21 @@ def GetYamlString(yamlFile):
     return yamlString
 
 
+def DumpYamlDataToFile(yamlData, yamlFile):
+    yamlDump = yaml.dump(yamlData)
+    with open(yamlFile, 'w') as f:
+        f.write(yamlDump)
+
+
+def HandleDumpYamlData(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE]):
+    if not('>' in arguments):
+        return
+    outputFiles = GetArgumentValues(arguments, '>')
+    for outputFile in outputFiles:
+        yamlData = LoadYamlDataFromFiles(arguments, defaultYamlFiles)
+        DumpYamlDataToFile(yamlData, outputFile)
+
+
 def ReplaceEnvironmentVariablesMatches(yamlString):
     pattern = r'\$\{([^}^{]+)\}'
     matches = re.finditer(pattern, yamlString)

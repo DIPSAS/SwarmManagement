@@ -55,6 +55,7 @@ def HandleManagement(arguments):
         return
 
     SwarmTools.LoadEnvironmentVariables(arguments)
+    SwarmTools.HandleDumpYamlData(arguments)
     
     if '-help' in arguments \
         and not('-stack' in arguments) \
