@@ -2,9 +2,11 @@ import yaml
 import time
 import re
 import os
+from DockerBuildSystem import TerminalTools
 
 
 DEFAULT_SWARM_MANAGEMENT_YAML_FILE = 'swarm-management.yml'
+DEFAULT_ENVIRONMENT_FILE = '.env'
 
 
 def GetInfoMsg():
@@ -98,12 +100,23 @@ def RemoveNonExistingFiles(files):
     return existingFiles
 
 
+def LoadEnvironmentVariables(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE]):
+    yamlData = LoadYamlDataFromFiles(
+        arguments, defaultYamlFiles, True, True)
+    environmentFiles = GetEnvironmnetVariablesFiles(
+        arguments, yamlData)
+    for environmentFile in environmentFiles:
+        TerminalTools.LoadEnvironmentVariables(environmentFile)
+
+
 def GetEnvironmnetVariablesFiles(arguments, yamlData):
     envFiles = []
     if 'env_files' in yamlData:
         envFiles += yamlData['env_files']
     envFiles += GetArgumentValues(arguments, '-env')
     envFiles += GetArgumentValues(arguments, '-e')
+    if os.path.isfile(DEFAULT_ENVIRONMENT_FILE):
+        envFiles += [DEFAULT_ENVIRONMENT_FILE]
     return envFiles
 
 

@@ -52,6 +52,9 @@ def RestartSwarm(arguments):
 def HandleManagement(arguments):
     if len(arguments) == 0:
         print(GetInfoMsg())
+        return
+
+    SwarmTools.LoadEnvironmentVariables(arguments)
     
     if '-help' in arguments \
         and not('-stack' in arguments) \
