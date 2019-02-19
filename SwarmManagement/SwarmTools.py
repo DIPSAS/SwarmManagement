@@ -2,6 +2,7 @@ import yaml
 import time
 import re
 import os
+import sys
 from DockerBuildSystem import TerminalTools
 
 
@@ -16,6 +17,7 @@ def GetInfoMsg():
     infoMsg += "Example: -f swarm-management-stacks.yml -f swarm-management-networks.yml\r\n"
     infoMsg += "Environment variables may be set with environment files.\r\n"
     infoMsg += GetEnvironmentVariablesInfoMsg()
+    infoMsg += GetYamlDumpInfoMsg()
     return infoMsg
 
 
@@ -32,6 +34,12 @@ def GetEnvironmentVariablesInfoMsg():
     return infoMsg
 
 
+def GetYamlDumpInfoMsg():
+    infoMsg = "It is possible to dump current yaml data using the '-dump' argument.\r\n"
+    infoMsg += "Example: -dump output.yml\r\n"
+    return infoMsg
+
+
 def GetYamlString(yamlFile):
     with open(yamlFile) as f:
         yamlString = f.read() + "\r\n"
@@ -45,9 +53,9 @@ def DumpYamlDataToFile(yamlData, yamlFile):
 
 
 def HandleDumpYamlData(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE]):
-    if not('>' in arguments):
+    if not('-dump' in arguments):
         return
-    outputFiles = GetArgumentValues(arguments, '>')
+    outputFiles = GetArgumentValues(arguments, '-dump')
     for outputFile in outputFiles:
         yamlData = LoadYamlDataFromFiles(arguments, defaultYamlFiles)
         DumpYamlDataToFile(yamlData, outputFile)
@@ -153,3 +161,8 @@ def TimeoutCounter(secTimeout):
             printedTime = timeLeft
             print("Restarting Swarm in %d seconds" % printedTime)
         elapsedTime = time.time() - startTime
+
+
+if __name__ == "__main__":
+    arguments = sys.argv[1:]
+    HandleDumpYamlData(arguments)
