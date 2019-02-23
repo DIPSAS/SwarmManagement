@@ -1,22 +1,14 @@
-# this file is *not* meant to cover or endorse the use of travis, but rather to
-# help confirm pull requests to this project.
-
 language: python
 
-matrix:
-  include:
-    - python: 2.7
-      env: TOXENV=py27
-    - python: 3.4
-      env: TOXENV=py34
-    - python: 3.5
-      env: TOXENV=py35
-    - python: 3.6
-      env: TOXENV=py36
+services:
+  - docker
 
-install: pip install tox
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"
 
-script: tox
+install: pip install -r requirements.txt
 
-notifications:
-  email: false
+script: python -m unittest discover -p *Test*.py

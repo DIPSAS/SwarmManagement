@@ -92,3 +92,6 @@ Please have a look at an example of use here:
 1. Configure setup.py with new version.
 2. Build: python setup.py bdist_wheel
 3. Publish: twine upload dist/*
+
+## Run Unit Tests
+- python -m unittest
