@@ -89,7 +89,7 @@ def GetYamlData(yamlFiles, ignoreEmptyYamlData = False):
     return yamlData
 
 
-def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix = "-", getFirstAlternativeOnly = True):
+def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix="-", stopAtFirstArgumentWithPrefix="-"):
     argumentValues = []
     for i in range(len(arguments)):
         currentArgumentType = arguments[i]
@@ -98,8 +98,8 @@ def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix = "-", 
                 argumentValue = arguments[j]
                 if not(argumentValue.startswith(ignoreArgumentsWithPrefix)):
                     argumentValues.append(argumentValue)
-                    if getFirstAlternativeOnly:
-                        return argumentValues
+                elif argumentValue != argumentType and argumentValue.startswith(stopAtFirstArgumentWithPrefix):
+                    return argumentValues
     return argumentValues
 
 
