@@ -98,7 +98,9 @@ def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix="-", st
                 argumentValue = arguments[j]
                 if not(argumentValue.startswith(ignoreArgumentsWithPrefix)):
                     argumentValues.append(argumentValue)
-                elif argumentValue != argumentType and argumentValue.startswith(stopAtFirstArgumentWithPrefix):
+                elif argumentValue != argumentType and \
+                    len(argumentValues) > 0 and \
+                    argumentValue.startswith(stopAtFirstArgumentWithPrefix):
                     return argumentValues
     return argumentValues
 
