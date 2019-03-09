@@ -7,6 +7,9 @@
 Swarm Management is a python application, installed with pip.
 The application makes it easy to manage a Docker Swarm by configuring a single *.yml file describing which stacks to deploy, and which networks, configs or secrets to create.
 
+## Install Or Upgrade
+- pip install --upgrade SwarmManagement
+
 ## Example
 1. Install SwarmManagement with pip:
     - pip install SwarmManagement
@@ -79,12 +82,11 @@ The SwarmManagement console command is also available as a short command with `s
 Please have a look at an example of use here:
 - https://github.com/DIPSAS/SwarmManagement/tree/master/example
 
-## Install And/Or Upgrade
-- pip install --no-cache --upgrade SwarmManagement
-
 ## Prerequisites
 - Docker:
     - https://www.docker.com/get-docker
+- Install Dependencies:
+    - pip install -r requirements.txt
 
 ## Additional Info
 - The pip package may be located at:
