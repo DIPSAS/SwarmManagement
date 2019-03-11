@@ -1,2 +1,3 @@
+SwarmManagement
 twine
-DockerBuildSystem>=1.1.22
+DockerBuildSystem>=1.1.23
