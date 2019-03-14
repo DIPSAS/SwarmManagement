@@ -78,7 +78,7 @@ def GetYamlData(yamlFiles, ignoreEmptyYamlData = False):
     for yamlFile in yamlFiles:
         yamlStrings += GetYamlString(yamlFile)
     yamlStrings = ReplaceEnvironmentVariablesMatches(yamlStrings)
-    yamlData = yaml.load(yamlStrings)
+    yamlData = yaml.safe_load(yamlStrings)
     if yamlData == None:
         if ignoreEmptyYamlData:
             yamlData = {}
