@@ -10,10 +10,11 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
 ## Install Or Upgrade
 - pip install --upgrade SwarmManagement
 
+## Verify Installation
+- `swm -help`
+
 ## Example
-1. Install SwarmManagement with pip:
-    - pip install SwarmManagement
-2. Create a `swarm-management.yml` file describing all properties of the swarm.
+1. Create a `swarm-management.yml` file describing all properties of the swarm.
     - The `swarm-management.yml` file contains following properties:
     ```yaml
     stacks:
@@ -29,55 +30,53 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
     env_files:
         - <environment_file>
     ```
-3. Manage Swarm
+2. Manage Swarm:
     - Start Swarm with:
-        - -> SwarmManagement -start
+        - -> swm -start
     - Stop Swarm with:
-        - -> SwarmManagement -stop
+        - -> swm -stop
     - Restart Swarm with:
-        - -> SwarmManagement -restart
+        - -> swm -restart
     - Deploy/Update or Remove a single stack:
-        - -> SwarmManagement -stack -deploy `<stack_name>`
-        - -> SwarmManagement -stack -remove `<stack_name>`
+        - -> swm -stack -deploy `<stack_name>`
+        - -> swm -stack -remove `<stack_name>`
         - Or deploy/remove all stacks with the `all` attribute:
-            - -> SwarmManagement -stack -deploy all
-            - -> SwarmManagement -stack -remove all
+            - -> swm -stack -deploy all
+            - -> swm -stack -remove all
     - Create or Remove a single network:
-        - -> SwarmManagement -network -create `<network_name>`
-        - -> SwarmManagement -network -remove `<network_name>`
+        - -> swm -network -create `<network_name>`
+        - -> swm -network -remove `<network_name>`
         - Or create/remove all networks with the `all` attribute:
-            - -> SwarmManagement -network -create all
-            - -> SwarmManagement -network -remove all
+            - -> swm -network -create all
+            - -> swm -network -remove all
     - Create or Remove a single config:
-        - -> SwarmManagement -config -create `<config_name>`
-        - -> SwarmManagement -config -remove `<config_name>`
+        - -> swm -config -create `<config_name>`
+        - -> swm -config -remove `<config_name>`
         - Or create/remove all configs with the `all` attribute:
-            - -> SwarmManagement -stack -create all
-            - -> SwarmManagement -stack -remove all
+            - -> swm -stack -create all
+            - -> swm -stack -remove all
     - Create or Remove a single secret:
-        - -> SwarmManagement -secret -create `<secret_name>`
-        - -> SwarmManagement -secret -remove `<secret_name>`
+        - -> swm -secret -create `<secret_name>`
+        - -> swm -secret -remove `<secret_name>`
         - Or create/remove all secrets with the `all` attribute:
-            - -> SwarmManagement -secret -create all
-            - -> SwarmManagement -secret -remove all
+            - -> swm -secret -create all
+            - -> swm -secret -remove all
     - Create or Remove a single volume:
-        - -> SwarmManagement -volume -create `<volume_name>`
-        - -> SwarmManagement -volume -remove `<volume_name>`
+        - -> swm -volume -create `<volume_name>`
+        - -> swm -volume -remove `<volume_name>`
         - Or create/remove all volumes with the `all` attribute:
-            - -> SwarmManagement -volume -create all
-            - -> SwarmManagement -volume -remove all
+            - -> swm -volume -create all
+            - -> swm -volume -remove all
     - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
         - Specify a single or multiple *.yml files to use for configuring the swarm using the `-f` attribute:
-            - -> SwarmManagement -start -f swarm-stacks.yml -f swarm-networks.yml
+            - -> swm -start -f swarm-stacks.yml -f swarm-networks.yml
     - Additional info is found by asking SwarmManagement:
-        - -> SwarmManagement -help
-        - -> SwarmManagement -stack -help
-        - -> SwarmManagement -network -help
-        - -> SwarmManagement -config -help
-        - -> SwarmManagement -secret -help
-        - -> SwarmManagement -volume -help
-
-The SwarmManagement console command is also available as a short command with `swm`.
+        - -> swm -help
+        - -> swm -stack -help
+        - -> swm -network -help
+        - -> swm -config -help
+        - -> swm -secret -help
+        - -> swm -volume -help
 
 Please have a look at an example of use here:
 - https://github.com/DIPSAS/SwarmManagement/tree/master/example
