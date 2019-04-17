@@ -6,6 +6,6 @@
         - -> SwarmManagement -start
     - Stop Swarm with:
         - -> SwarmManagement -stop
-    - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
+    - SwarmManagement uses the `swarm.management.yml` file by default to configure the swarm.
     - Additional info is found by asking SwarmManagement:
         - -> SwarmManagement -help

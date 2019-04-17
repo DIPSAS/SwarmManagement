@@ -5,16 +5,19 @@ import os
 import sys
 from DockerBuildSystem import TerminalTools
 
-
-DEFAULT_SWARM_MANAGEMENT_YAML_FILE = 'swarm-management.yml'
 DEFAULT_ENVIRONMENT_FILE = '.env'
+DEFAULT_SWARM_MANAGEMENT_YAML_FILES = [
+    'swarm.management.yml', 
+    'swarm.management.yaml',
+    'swarm-management.yml',
+    'swarm-management.yaml']
 
 
 def GetInfoMsg():
     infoMsg = "One or more yaml files are used to configure the swarm.\r\n"
-    infoMsg += "The yaml file 'swarm-management.yml' is used by default if no other files are specified.\r\n"
+    infoMsg += "The yaml file 'swarm.management.yml' is used by default if no other files are specified.\r\n"
     infoMsg += "A yaml file may be specified by adding '-file' or '-f' to the arguments.\r\n"
-    infoMsg += "Example: -f swarm-management-stacks.yml -f swarm-management-networks.yml\r\n"
+    infoMsg += "Example: -f swarm.management-stacks.yml -f swarm.management-networks.yml\r\n"
     infoMsg += "Environment variables may be set with environment files.\r\n"
     infoMsg += GetEnvironmentVariablesInfoMsg()
     infoMsg += GetYamlDumpInfoMsg()
@@ -40,6 +43,27 @@ def GetYamlDumpInfoMsg():
     return infoMsg
 
 
+def GetNoYmlFilesFoundMsg(defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_YAML_FILES):
+    infoMsg = "Error\r\n"
+    infoMsg += "Could not find any supported management files.\r\n"
+    infoMsg += "Are you in the right directory?\r\n"
+    infoMsg += "Supported management files: " + str.join(', ', defaultYamlFiles) + "\r\n"
+    return infoMsg
+
+
+def AssertYamlFilesExists(yamlFiles, defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_YAML_FILES):
+    existingYamlFiles = []
+    for yamlFile in yamlFiles:
+        if os.path.isfile(yamlFile):
+            existingYamlFiles.append(yamlFile)
+    
+    if len(existingYamlFiles) == 0:
+        print(GetNoYmlFilesFoundMsg(defaultYamlFiles))
+        exit(-1)
+
+    return existingYamlFiles
+
+
 def GetYamlString(yamlFile):
     with open(yamlFile) as f:
         yamlString = f.read() + "\r\n"
@@ -52,7 +76,7 @@ def DumpYamlDataToFile(yamlData, yamlFile):
         f.write(yamlDump)
 
 
-def HandleDumpYamlData(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE]):
+def HandleDumpYamlData(arguments, defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_YAML_FILES):
     if not('-dump' in arguments):
         return
     outputFiles = GetArgumentValues(arguments, '-dump')
@@ -105,29 +129,20 @@ def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix="-", st
     return argumentValues
 
 
-def LoadYamlDataFromFiles(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE], \
-    ignoreNonExistingFiles = False, ignoreEmptyYamlData = False):
+def LoadYamlDataFromFiles(arguments, defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_YAML_FILES, \
+    ignoreEmptyYamlData = False):
     yamlFiles = GetArgumentValues(arguments, '-file')
     yamlFiles += GetArgumentValues(arguments, '-f')
     if len(yamlFiles) == 0:
         yamlFiles = defaultYamlFiles
-    if ignoreNonExistingFiles:
-        yamlFiles = RemoveNonExistingFiles(yamlFiles)
+    yamlFiles = AssertYamlFilesExists(yamlFiles, defaultYamlFiles)
     yamlData = GetYamlData(yamlFiles, ignoreEmptyYamlData)
     return yamlData
 
 
-def RemoveNonExistingFiles(files):
-    existingFiles = []
-    for filename in files:
-        if os.path.isfile(filename):
-            existingFiles.append(filename)
-    return existingFiles
-
-
-def LoadEnvironmentVariables(arguments, defaultYamlFiles=[DEFAULT_SWARM_MANAGEMENT_YAML_FILE]):
+def LoadEnvironmentVariables(arguments, defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_YAML_FILES):
     yamlData = LoadYamlDataFromFiles(
-        arguments, defaultYamlFiles, True, True)
+        arguments, defaultYamlFiles, True)
     environmentFiles = GetEnvironmnetVariablesFiles(
         arguments, yamlData)
     for environmentFile in environmentFiles:

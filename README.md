@@ -14,8 +14,8 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
 - `swm -help`
 
 ## Example
-1. Create a `swarm-management.yml` file describing all properties of the swarm.
-    - The `swarm-management.yml` file contains following properties:
+1. Create a `swarm.management.yml` file describing all properties of the swarm.
+    - The `swarm.management.yml` file contains following properties:
     ```yaml
     stacks:
         <stack_name>: <compose_file>
@@ -67,7 +67,7 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
         - Or create/remove all volumes with the `all` attribute:
             - -> swm -volume -create all
             - -> swm -volume -remove all
-    - SwarmManagement uses the `swarm-management.yml` file by default to configure the swarm.
+    - SwarmManagement uses the `swarm.management.yml` file by default to configure the swarm.
         - Specify a single or multiple *.yml files to use for configuring the swarm using the `-f` attribute:
             - -> swm -start -f swarm-stacks.yml -f swarm-networks.yml
     - Additional info is found by asking SwarmManagement:
