@@ -20,16 +20,27 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
     stacks:
         <stack_name>: <compose_file>
     networks:
-        <network_name>: <true/false> => encrypted (true) / non-encrypted (false)
+        <network_name>: 
+            encrypted: false
+            driver: overlay
+            attachable: true
+            options:
+              - --ipv6
     configs:
         <config_name>: <config_file>
     secrets:
         <secret_name>: <secret_file>
     volumes:
         <volume_name>:
+            driver: local
+            driverOptions:
+              - type=tmpfs
+              - device=tmpfs
+              - o=size=100m,uid=1000
     env_files:
         - <environment_file>
     ```
+
 2. Manage Swarm:
     - Start Swarm with:
         - -> swm -start
@@ -80,6 +91,39 @@ The application makes it easy to manage a Docker Swarm by configuring a single *
 
 Please have a look at an example of use here:
 - https://github.com/DIPSAS/SwarmManagement/tree/master/example
+
+## Section Features
+
+## Start/Stop or Restart Swarm
+Deploy the swarm with `swm -start`, and stop the swarm with `swm -stop`.
+Restart the swarm with `swm -restart <restart_delay_in_seconds>`. The `<restart_delay_in_seconds>` argument is optional, and defaults to 10 seconds if not given.
+
+### Stacks
+The `stacks` section lists all stacks to be deployed as: `<stack_name>: <compose_file>`
+
+### Networks
+The `networks` section lists all networks to be created as, and each network is created with the following default properties:
+* `encrypted: false`
+* `driver: overlay`
+* `attachable: true`
+* `options:`
+    - `<list_of_network_options>`
+
+### Configs
+The `configs` section lists all configs to be created as: `<config_name>: <config_file>`
+
+### Secrets
+The `secrets` section lists all secrets to be created as: `<secret_name>: <secret_file>`
+
+### Volumes
+The `volumes` section lists all volumes to be created as, and each volumes is created with the following default properties:
+* `driver: local`
+* `driverOptions:`
+    - `<list_of_driver_options>`
+
+### Environment variables
+The `env_files` section lists all environmnet (`.env`) files with environment variables to expose.
+By convention, a present `.env` file will automatically be loaded.
 
 ## Prerequisites
 - Docker:

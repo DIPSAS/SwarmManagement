@@ -14,12 +14,12 @@ services:
             - source: site.conf
               target: /etc/nginx/conf.d/site.conf
         networks:
-            - frontend-network
+            - frontend_network
         ports:
             - ${SSL_FRONTEND_PORT}:443
 
 networks:
-    frontend-network:
+    frontend_network:
         external: true
     
 configs:

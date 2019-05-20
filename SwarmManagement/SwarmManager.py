@@ -45,6 +45,9 @@ def StopSwarm(arguments):
 def RestartSwarm(arguments):
     StopSwarm(arguments)
     secTimeout = 10
+    restartArguments = SwarmTools.GetArgumentValues(arguments, '-restart')
+    if len(restartArguments) > 0 and restartArguments[0].isdigit():
+        secTimeout = int(restartArguments[0])
     SwarmTools.TimeoutCounter(secTimeout)
     StartSwarm(arguments)
 

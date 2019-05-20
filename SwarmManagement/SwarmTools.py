@@ -180,6 +180,12 @@ def TimeoutCounter(secTimeout):
         elapsedTime = time.time() - startTime
 
 
+def TryGetFromDictionary(dictionary, key, defaultValue):
+    if key in dictionary:
+        return dictionary[key]
+    return defaultValue
+
+
 if __name__ == "__main__":
     arguments = sys.argv[1:]
     HandleDumpYamlData(arguments)

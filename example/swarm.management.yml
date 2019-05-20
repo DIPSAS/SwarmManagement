@@ -3,8 +3,13 @@ stacks:
     ssl_proxy: docker-compose.ssl.proxy.yml
 
 networks: 
-    frontend-network: false
-    backend-network: true
+    frontend_network: 
+        encrypted: false
+        driver: overlay
+        attachable: true
+        options:
+            - --ipv6
+    backend_network:
 
 configs: 
     site.conf: site.conf
@@ -15,6 +20,11 @@ secrets:
 
 volumes:
     first_volume:
+        driver: local
+        driverOptions:
+            - type=tmpfs
+            - device=tmpfs
+            - o=size=100m,uid=1000
     second_volume:
 
 env_files: 

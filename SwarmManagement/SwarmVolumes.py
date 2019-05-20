@@ -24,14 +24,19 @@ def CreateVolumes(volumesToCreate, volumes):
     for volumeToCreate in volumesToCreate:
         if volumeToCreate == 'all':
             for volume in volumes:
-                CreateVolume(volume)
+                CreateVolume(volume, volumes[volume])
         else:
             if volumeToCreate in volumes:
-                CreateVolume(volumeToCreate)
+                CreateVolume(volumeToCreate, volumes[volumeToCreate])
 
 
-def CreateVolume(volumeName):
-    DockerSwarmTools.CreateSwarmVolume(volumeName)
+def CreateVolume(volumeName, volumeProperties):
+    if volumeProperties == None:
+        volumeProperties = {}
+    driver = SwarmTools.TryGetFromDictionary(volumeProperties, 'driver', 'local')
+    driverOptions = SwarmTools.TryGetFromDictionary(volumeProperties, 'driverOptions', [])
+
+    DockerSwarmTools.CreateSwarmVolume(volumeName, driver, driverOptions)
 
 
 def RemoveVolumes(volumesToRemove, volumes):

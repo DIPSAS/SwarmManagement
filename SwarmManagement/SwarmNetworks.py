@@ -6,10 +6,10 @@ import sys
 def GetInfoMsg():
     infoMsg = "Networks is configured by adding a 'networks' property to the .yaml file.\r\n"
     infoMsg += "The 'networks' property is a dictionary of networks.\r\n"
-    infoMsg += "Each key in the network dictionary is the network name with a value containing a boolean to flag encrypted (true) or non-encrypted (false), as such: \r\n"
-    infoMsg += "<network_name>: true/false\r\n"
+    infoMsg += "Each key in the network dictionary is the network name, as such: \r\n"
+    infoMsg += "<network_name>:\r\n"
     infoMsg += "Example: \r\n"
-    infoMsg += "secrets: <network_name>: true/false\r\n"
+    infoMsg += "networks: <network_name>:\r\n"
     infoMsg += "Create or remove a network by adding '-network -c/-create <network_name>' or 'network -rm/-remove <network_name>' to the arguments\r\n"
     infoMsg += "Create or remove all networks by adding '-network -c/-create all' or 'network -rm/-remove all' to the arguments\r\n"
     return infoMsg
@@ -30,9 +30,19 @@ def CreateNetworks(networksToCreate, networks):
                 CreateNetwork(networkToCreate, networks[networkToCreate])
 
 
-def CreateNetwork(networkName, encrypted):
+def CreateNetwork(networkName, networkProperties):
+    if networkProperties == None:
+        networkProperties = {}
+    elif isinstance(networkProperties, bool):
+        networkProperties = {'encrypted': networkProperties}
+
+    encrypted = SwarmTools.TryGetFromDictionary(networkProperties, 'encrypted', False)
+    driver = SwarmTools.TryGetFromDictionary(networkProperties, 'driver', 'overlay')
+    attachable = SwarmTools.TryGetFromDictionary(networkProperties, 'attachable', True)
+    options = SwarmTools.TryGetFromDictionary(networkProperties, 'options', [])
+
     DockerSwarmTools.CreateSwarmNetwork(
-        networkName, encrypted)
+        networkName, encrypted, driver, attachable, options)
 
 
 def RemoveNetworks(networksToRemove, networks):

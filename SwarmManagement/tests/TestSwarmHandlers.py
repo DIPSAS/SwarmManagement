@@ -18,6 +18,10 @@ class TestSwarmHandlers(unittest.TestCase):
         SwarmConfigs.HandleConfigs(arguments)
         arguments = ['-config', '-rm', 'all']
         SwarmConfigs.HandleConfigs(arguments)
+        arguments = ['-config', '-create', 'site.conf']
+        SwarmConfigs.HandleConfigs(arguments)
+        arguments = ['-config', '-rm', 'site.conf']
+        SwarmConfigs.HandleConfigs(arguments)
         os.chdir(cwd)
         print('DONE EXECUTING SWARM CONFIG TEST')
 
@@ -27,6 +31,10 @@ class TestSwarmHandlers(unittest.TestCase):
         arguments = ['-secret', '-create', 'all']
         SwarmSecrets.HandleSecrets(arguments)
         arguments = ['-secret', '-rm', 'all']
+        SwarmSecrets.HandleSecrets(arguments)
+        arguments = ['-secret', '-create', 'site.key']
+        SwarmSecrets.HandleSecrets(arguments)
+        arguments = ['-secret', '-rm', 'site.key']
         SwarmSecrets.HandleSecrets(arguments)
         os.chdir(cwd)
         print('DONE EXECUTING SWARM SECRET TEST')
@@ -38,6 +46,10 @@ class TestSwarmHandlers(unittest.TestCase):
         SwarmNetworks.HandleNetworks(arguments)
         arguments = ['-network', '-rm', 'all']
         SwarmNetworks.HandleNetworks(arguments)
+        arguments = ['-network', '-create', 'frontend_network']
+        SwarmNetworks.HandleNetworks(arguments)
+        arguments = ['-network', '-rm', 'frontend_network']
+        SwarmNetworks.HandleNetworks(arguments)
         os.chdir(cwd)
         print('DONE EXECUTING SWARM NETWORK TEST')
 
@@ -48,6 +60,10 @@ class TestSwarmHandlers(unittest.TestCase):
         SwarmVolumes.HandleVolumes(arguments)
         arguments = ['-volume', '-rm', 'all']
         SwarmVolumes.HandleVolumes(arguments)
+        arguments = ['-volume', '-create', 'first_volume']
+        SwarmVolumes.HandleVolumes(arguments)
+        arguments = ['-volume', '-rm', 'first_volume']
+        SwarmVolumes.HandleVolumes(arguments)
         os.chdir(cwd)
         print('DONE EXECUTING SWARM VOLUMES TEST')
 
@@ -55,6 +71,10 @@ class TestSwarmHandlers(unittest.TestCase):
         print('EXECUTING SWARM MANAGER TEST')
         cwd = TestTools.ChangeToSampleFolderAndGetCwd()
         arguments = ['-start']
+        SwarmManager.HandleManagement(arguments)
+        arguments = ['-restart', '2']
+        SwarmManager.HandleManagement(arguments)
+        arguments = ['-restart']
         SwarmManager.HandleManagement(arguments)
         arguments = ['-stop']
         SwarmManager.HandleManagement(arguments)
@@ -69,6 +89,10 @@ class TestSwarmHandlers(unittest.TestCase):
         arguments = ['-stack', '-deploy', 'all']
         SwarmStacks.HandleStacks(arguments)
         arguments = ['-stack', '-rm', 'all']
+        SwarmStacks.HandleStacks(arguments)
+        arguments = ['-stack', '-deploy', 'ssl_proxy']
+        SwarmStacks.HandleStacks(arguments)
+        arguments = ['-stack', '-rm', 'ssl_proxy']
         SwarmStacks.HandleStacks(arguments)
         arguments = ['-stop']
         SwarmManager.HandleManagement(arguments)
