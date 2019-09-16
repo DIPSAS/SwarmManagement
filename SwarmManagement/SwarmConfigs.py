@@ -1,5 +1,5 @@
 from SwarmManagement import SwarmTools
-from DockerBuildSystem import DockerSwarmTools
+from DockerBuildSystem import DockerSwarmTools, YamlTools
 import sys
 
 
@@ -17,7 +17,7 @@ def GetInfoMsg():
 
 def GetConfigs(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
-    return SwarmTools.GetProperties(arguments, 'configs', GetInfoMsg(), yamlData)
+    return YamlTools.GetProperties('configs', yamlData)
 
 
 def CreateConfigs(configsToCreate, configs):

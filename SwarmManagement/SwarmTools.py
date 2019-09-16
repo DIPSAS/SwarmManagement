@@ -1,9 +1,7 @@
-import yaml
 import time
-import re
 import os
 import sys
-from DockerBuildSystem import TerminalTools
+from DockerBuildSystem import TerminalTools, YamlTools
 
 DEFAULT_ENVIRONMENT_FILE = '.env'
 DEFAULT_SWARM_MANAGEMENT_YAML_FILES = [
@@ -64,53 +62,13 @@ def AssertYamlFilesExists(yamlFiles, defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_Y
     return existingYamlFiles
 
 
-def GetYamlString(yamlFile):
-    with open(yamlFile) as f:
-        yamlString = f.read() + "\r\n"
-    return yamlString
-
-
-def DumpYamlDataToFile(yamlData, yamlFile):
-    yamlDump = yaml.dump(yamlData)
-    with open(yamlFile, 'w') as f:
-        f.write(yamlDump)
-
-
 def HandleDumpYamlData(arguments, defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_YAML_FILES):
     if not('-dump' in arguments):
         return
     outputFiles = GetArgumentValues(arguments, '-dump')
     for outputFile in outputFiles:
         yamlData = LoadYamlDataFromFiles(arguments, defaultYamlFiles)
-        DumpYamlDataToFile(yamlData, outputFile)
-
-
-def ReplaceEnvironmentVariablesMatches(yamlString):
-    pattern = r'\$\{([^}^{]+)\}'
-    matches = re.finditer(pattern, yamlString)
-    for match in matches:
-        envVar = match.group()[2:-1]
-        envValue = os.environ.get(envVar)
-        if envValue == None:
-            envValue = ''
-        yamlString = yamlString.replace(match.group(), envValue)
-    return yamlString
-
-
-def GetYamlData(yamlFiles, ignoreEmptyYamlData = False):
-    yamlStrings = ""
-    for yamlFile in yamlFiles:
-        yamlStrings += GetYamlString(yamlFile)
-    yamlStrings = ReplaceEnvironmentVariablesMatches(yamlStrings)
-    yamlData = yaml.safe_load(yamlStrings)
-    if yamlData == None:
-        if ignoreEmptyYamlData:
-            yamlData = {}
-            return yamlData
-        errorMsg = "No yml data where discovered!\r\n"
-        errorMsg += GetInfoMsg()
-        raise Exception(errorMsg)
-    return yamlData
+        YamlTools.DumpYamlDataToFile(yamlData, outputFile)
 
 
 def GetArgumentValues(arguments, argumentType, ignoreArgumentsWithPrefix="-", stopAtFirstArgumentWithPrefix="-"):
@@ -136,7 +94,7 @@ def LoadYamlDataFromFiles(arguments, defaultYamlFiles=DEFAULT_SWARM_MANAGEMENT_Y
     if len(yamlFiles) == 0:
         yamlFiles = defaultYamlFiles
     yamlFiles = AssertYamlFilesExists(yamlFiles, defaultYamlFiles)
-    yamlData = GetYamlData(yamlFiles, ignoreEmptyYamlData)
+    yamlData = YamlTools.GetYamlData(yamlFiles, ignoreEmptyYamlData, infoMsgOnError=GetInfoMsg())
     return yamlData
 
 
@@ -160,13 +118,6 @@ def GetEnvironmnetVariablesFiles(arguments, yamlData):
     return envFiles
 
 
-def GetProperties(arguments, propertyType, errorInfoMsg, yamlData):
-    properties = {}
-    if propertyType in yamlData:
-        properties = yamlData[propertyType]
-    return properties
-
-
 def TimeoutCounter(secTimeout):
     startTime = time.time()
     elapsedTime = time.time() - startTime
@@ -178,12 +129,6 @@ def TimeoutCounter(secTimeout):
             printedTime = timeLeft
             print("Restarting Swarm in %d seconds" % printedTime)
         elapsedTime = time.time() - startTime
-
-
-def TryGetFromDictionary(dictionary, key, defaultValue):
-    if key in dictionary:
-        return dictionary[key]
-    return defaultValue
 
 
 if __name__ == "__main__":

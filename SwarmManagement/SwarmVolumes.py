@@ -1,5 +1,5 @@
 from SwarmManagement import SwarmTools
-from DockerBuildSystem import DockerSwarmTools
+from DockerBuildSystem import DockerSwarmTools, YamlTools
 import sys
 
 
@@ -17,7 +17,7 @@ def GetInfoMsg():
 
 def GetVolumes(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
-    return SwarmTools.GetProperties(arguments, 'volumes', GetInfoMsg(), yamlData)
+    return YamlTools.GetProperties('volumes', yamlData)
 
 
 def CreateVolumes(volumesToCreate, volumes):
@@ -33,8 +33,8 @@ def CreateVolumes(volumesToCreate, volumes):
 def CreateVolume(volumeName, volumeProperties):
     if volumeProperties == None:
         volumeProperties = {}
-    driver = SwarmTools.TryGetFromDictionary(volumeProperties, 'driver', 'local')
-    driverOptions = SwarmTools.TryGetFromDictionary(volumeProperties, 'driverOptions', [])
+    driver = YamlTools.TryGetFromDictionary(volumeProperties, 'driver', 'local')
+    driverOptions = YamlTools.TryGetFromDictionary(volumeProperties, 'driverOptions', [])
 
     DockerSwarmTools.CreateSwarmVolume(volumeName, driver, driverOptions)
 

@@ -1,7 +1,5 @@
 import unittest
-import os
-import random
-from .. import SwarmTools
+from SwarmManagement import SwarmTools
 
 class TestSwarmTools(unittest.TestCase):
 
@@ -34,16 +32,6 @@ class TestSwarmTools(unittest.TestCase):
         self.assertListEqual(selections, selectedRuns)
         self.assertEqual(len(selections), len(selectedBuilds))
         self.assertListEqual(selections, selectedBuilds)
-
-    def test_replaceEnvironmentVariablesMatches_success(self):
-        ENV_KEY = "ENVIRONMENT_KEY_" + str(random.randint(0, 1000))
-        ENV_VALUE = "ENVIRONMENT VALUE"
-        os.environ.setdefault(ENV_KEY, ENV_VALUE)
-        yamlString = 'testing string ${' + ENV_KEY + '} should be replaced'
-        print(yamlString)
-        replacedYamlString = SwarmTools.ReplaceEnvironmentVariablesMatches(yamlString)
-        print(replacedYamlString)
-        self.assertTrue(ENV_VALUE in replacedYamlString)
 
 
 if __name__ == '__main__':

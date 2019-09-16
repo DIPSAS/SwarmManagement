@@ -1,5 +1,4 @@
 import sys
-import time
 from SwarmManagement import SwarmStacks, SwarmConfigs, SwarmSecrets, SwarmNetworks, SwarmVolumes, SwarmTools
 from DockerBuildSystem import DockerSwarmTools
 

@@ -1,5 +1,5 @@
 from SwarmManagement import SwarmTools
-from DockerBuildSystem import DockerSwarmTools
+from DockerBuildSystem import DockerSwarmTools, YamlTools
 import sys
 
 
@@ -17,7 +17,7 @@ def GetInfoMsg():
 
 def GetSecrets(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
-    return SwarmTools.GetProperties(arguments, 'secrets', GetInfoMsg(), yamlData)
+    return YamlTools.GetProperties('secrets', yamlData)
 
 
 def CreateSecrets(secretsToCreate, secrets):

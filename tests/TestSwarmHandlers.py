@@ -1,13 +1,12 @@
 import unittest
 import os
-from . import TestTools
-from .. import SwarmTools
-from .. import SwarmConfigs
-from .. import SwarmSecrets
-from .. import SwarmVolumes
-from .. import SwarmNetworks
-from .. import SwarmStacks
-from .. import SwarmManager
+from tests import TestTools
+from SwarmManagement import SwarmConfigs
+from SwarmManagement import SwarmSecrets
+from SwarmManagement import SwarmVolumes
+from SwarmManagement import SwarmNetworks
+from SwarmManagement import SwarmStacks
+from SwarmManagement import SwarmManager
 
 class TestSwarmHandlers(unittest.TestCase):
 

@@ -1,5 +1,5 @@
 from SwarmManagement import SwarmTools
-from DockerBuildSystem import DockerSwarmTools
+from DockerBuildSystem import DockerSwarmTools, YamlTools
 import sys
 
 
@@ -17,7 +17,7 @@ def GetInfoMsg():
 
 def GetNetworks(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
-    return SwarmTools.GetProperties(arguments, 'networks', GetInfoMsg(), yamlData)
+    return YamlTools.GetProperties('networks', yamlData)
 
 
 def CreateNetworks(networksToCreate, networks):
@@ -36,10 +36,10 @@ def CreateNetwork(networkName, networkProperties):
     elif isinstance(networkProperties, bool):
         networkProperties = {'encrypted': networkProperties}
 
-    encrypted = SwarmTools.TryGetFromDictionary(networkProperties, 'encrypted', False)
-    driver = SwarmTools.TryGetFromDictionary(networkProperties, 'driver', 'overlay')
-    attachable = SwarmTools.TryGetFromDictionary(networkProperties, 'attachable', True)
-    options = SwarmTools.TryGetFromDictionary(networkProperties, 'options', [])
+    encrypted = YamlTools.TryGetFromDictionary(networkProperties, 'encrypted', False)
+    driver = YamlTools.TryGetFromDictionary(networkProperties, 'driver', 'overlay')
+    attachable = YamlTools.TryGetFromDictionary(networkProperties, 'attachable', True)
+    options = YamlTools.TryGetFromDictionary(networkProperties, 'options', [])
 
     DockerSwarmTools.CreateSwarmNetwork(
         networkName, encrypted, driver, attachable, options)

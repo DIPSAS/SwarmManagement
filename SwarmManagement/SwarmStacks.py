@@ -1,5 +1,5 @@
 from SwarmManagement import SwarmTools
-from DockerBuildSystem import DockerSwarmTools
+from DockerBuildSystem import DockerSwarmTools, YamlTools
 import sys
 
 
@@ -17,7 +17,7 @@ def GetInfoMsg():
 
 def GetStacks(arguments):
     yamlData = SwarmTools.LoadYamlDataFromFiles(arguments)
-    return SwarmTools.GetProperties(arguments, 'stacks', GetInfoMsg(), yamlData)
+    return YamlTools.GetProperties('stacks', yamlData)
 
 
 def DeployStacks(stacksToDeploy, stacks, environmentFiles):
