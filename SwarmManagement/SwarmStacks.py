@@ -32,7 +32,7 @@ def DeployStacks(stacksToDeploy, stacks, environmentFiles):
 
 def DeployStack(stackName, composeFile, environmentFiles):
     DockerSwarmTools.DeployStack(
-        composeFile, stackName, environmentFiles)
+        composeFile, stackName, environmentFiles, withRegistryAuth=True)
 
 
 def RemoveStacks(stacksToRemove, stacks):
