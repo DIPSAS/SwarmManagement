@@ -1,4 +1,4 @@
 SwarmManagement
 twine
-DockerBuildSystem>=1.1.41
+DockerBuildSystem>=1.1.42
 wheel
