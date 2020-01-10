@@ -137,8 +137,9 @@ By convention, a present `.env` file will automatically be loaded.
 
 ## Publish New Version.
 1. Configure setup.py with new version.
-2. Build: python setup.py bdist_wheel
-3. Publish: twine upload dist/*
+2. Install build tools: `pip install twine wheel`
+3. Build: python setup.py bdist_wheel
+4. Publish: twine upload dist/*
 
 ## Run Unit Tests
 - python -m unittest
