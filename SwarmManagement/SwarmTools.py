@@ -23,15 +23,16 @@ def GetInfoMsg():
 
 
 def GetEnvironmentVariablesInfoMsg():
-    infoMsg = "Environment variables may be set with environment files.\r\n"
-    infoMsg += "Multiple environment files may be set set with the 'env_files' property in the yaml file.\r\n"
+    infoMsg = "Environment variables may be set with environment files or variables directly.\r\n"
+    infoMsg += "Multiple environment files or variables may be set set with the 'env_files' property in the yaml file.\r\n"
     infoMsg += "Example: \r\n"
     infoMsg += "env_files: \r\n"
     infoMsg += "\t - 'environment.env'\r\n"
-    infoMsg += "A preceding listed file will override any matching variables from the file listed above.\r\n"
-    infoMsg += "Environment files may also be set set with the -e/-env argument.\r\n"
-    infoMsg += "Setting the -e/-env argument will override matching environment variables in the files from the 'env_files' yaml property.\r\n"
-    infoMsg += "Example: -e environment.env\r\n"
+    infoMsg += "\t - 'envKey=envValue'\r\n"
+    infoMsg += "Topmost listed files will override any matching variables from the file listed below.\r\n"
+    infoMsg += "Directly setting a variable will always override an existing matching variable.\r\n"
+    infoMsg += "Environment files and variables may also be set set with the -e/-env argument.\r\n"
+    infoMsg += "Example: -e environment.env envKey=envValue\r\n"
     return infoMsg
 
 
@@ -104,15 +105,20 @@ def LoadEnvironmentVariables(arguments, defaultYamlFiles=DEFAULT_SWARM_MANAGEMEN
     environmentFiles = GetEnvironmnetVariablesFiles(
         arguments, yamlData)
     for environmentFile in environmentFiles:
-        TerminalTools.LoadEnvironmentVariables(environmentFile)
+        if os.path.isfile(environmentFile):
+            TerminalTools.LoadEnvironmentVariables(environmentFile)
+        elif '=' in environmentFile:
+            key, value = environmentFile.split('=')
+            os.environ[key] = value
+
 
 
 def GetEnvironmnetVariablesFiles(arguments, yamlData):
     envFiles = []
-    if 'env_files' in yamlData:
-        envFiles += yamlData['env_files']
     envFiles += GetArgumentValues(arguments, '-env')
     envFiles += GetArgumentValues(arguments, '-e')
+    if 'env_files' in yamlData:
+        envFiles += yamlData['env_files']
     if os.path.isfile(DEFAULT_ENVIRONMENT_FILE):
         envFiles += [DEFAULT_ENVIRONMENT_FILE]
     return envFiles
