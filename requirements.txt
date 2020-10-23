@@ -1,1 +1,1 @@
-DockerBuildSystem>=1.1.51
+DockerBuildSystem>=1.1.52
