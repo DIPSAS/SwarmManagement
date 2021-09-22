@@ -4,6 +4,10 @@
 [![Build Status](https://travis-ci.com/DIPSAS/SwarmManagement.svg?branch=master)](https://travis-ci.com/DIPSAS/SwarmManagement)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
+# !DEPRECATED!
+Please follow new source: 
+- https://github.com/hansehe/SwarmManagement
+
 Swarm Management is a python application, installed with pip.
 The application makes it easy to manage a Docker Swarm by configuring a single *.yml file describing which stacks to deploy, and which networks, configs or secrets to create.
 
